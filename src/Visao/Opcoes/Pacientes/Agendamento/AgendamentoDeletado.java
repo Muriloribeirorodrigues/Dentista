@@ -4,6 +4,9 @@
  */
 package Visao.Opcoes.Pacientes.Agendamento;
 import Visao.Opcoes.SelecionarOpcoes;
+import javax.swing.*;
+import java.awt.*;
+
 /**
  *
  * @author guto4
@@ -15,6 +18,24 @@ public class AgendamentoDeletado extends javax.swing.JFrame {
      */
     public AgendamentoDeletado() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -35,8 +56,8 @@ public class AgendamentoDeletado extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agendamento Deletado");
-        setMaximumSize(new java.awt.Dimension(521, 275));
-        setMinimumSize(new java.awt.Dimension(521, 275));
+        setMaximumSize(new java.awt.Dimension(800, 533));
+        setMinimumSize(new java.awt.Dimension(800, 533));
         getContentPane().setLayout(null);
 
         jLabel1.setText("Exclusão Concluida");
@@ -81,29 +102,52 @@ public class AgendamentoDeletado extends javax.swing.JFrame {
 
         Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/Odontoloigia Temporaria2.png"))); // NOI18N
         getContentPane().add(Imagem);
-        Imagem.setBounds(-150, -170, 800, 533);
+        Imagem.setBounds(0, 0, 800, 533);
 
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontoloigia Temporaria2.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
     private void ExcluirNovamenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirNovamenteActionPerformed
-    dispose();
-    new DeletarAgendamento().setVisible(true);
+        dispose();
+        new DeletarAgendamento().setVisible(true);
     }//GEN-LAST:event_ExcluirNovamenteActionPerformed
 
     private void AgendarNovamenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendarNovamenteActionPerformed
-    dispose();
-    new NovoAgendamento().setVisible(true);
+        dispose();
+        new NovoAgendamento().setVisible(true);
     }//GEN-LAST:event_AgendarNovamenteActionPerformed
 
     private void ConsultarAgendamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarAgendamentosActionPerformed
-    dispose();
-    new ConsultaAgendamentos().setVisible(true);
+        dispose();
+        new ConsultaAgendamentos().setVisible(true);
     }//GEN-LAST:event_ConsultarAgendamentosActionPerformed
 
     private void RetornarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetornarActionPerformed
-    dispose();
-    new SelecionarOpcoes().setVisible(true);
+        dispose();
+        new SelecionarOpcoes().setVisible(true);
     }//GEN-LAST:event_RetornarActionPerformed
 
     /**
@@ -113,7 +157,7 @@ public class AgendamentoDeletado extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -139,6 +183,71 @@ public class AgendamentoDeletado extends javax.swing.JFrame {
                 new AgendamentoDeletado().setVisible(true);
             }
         });
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // BOTÕES CENTRAIS
+        // =====================================
+
+        int larguraBotao = 260;
+        int alturaBotao = 23;
+        int espacamento = 10;
+
+        int x = (largura - larguraBotao) / 2;
+        int y = (altura / 2) - 80;
+
+        jLabel1.setBounds(
+                x + 65,
+                y - (alturaBotao + espacamento),
+                larguraBotao,
+                alturaBotao
+        );
+
+        ExcluirNovamente.setBounds(
+                x,
+                y,
+                larguraBotao,
+                alturaBotao
+        );
+
+        AgendarNovamente.setBounds(
+                x,
+                y + (alturaBotao + espacamento),
+                larguraBotao,
+                alturaBotao
+        );
+
+        ConsultarAgendamentos.setBounds(
+                x,
+                y + (alturaBotao + espacamento) * 2,
+                larguraBotao,
+                alturaBotao
+        );
+
+        Retornar.setBounds(
+                x,
+                y + (alturaBotao + espacamento) * 3,
+                larguraBotao,
+                alturaBotao
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

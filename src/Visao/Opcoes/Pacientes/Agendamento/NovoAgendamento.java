@@ -22,9 +22,14 @@ public class NovoAgendamento extends javax.swing.JFrame {
      */
     public NovoAgendamento() {
         initComponents();
-        ConfigurarImagem();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
         addComponentListener(new java.awt.event.ComponentAdapter() {
 
             @Override
@@ -53,6 +58,10 @@ public class NovoAgendamento extends javax.swing.JFrame {
         HorAgend = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         Imagem = new javax.swing.JLabel();
+
+        Imagem.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro De Agendamento");
@@ -133,205 +142,184 @@ public class NovoAgendamento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConfigurarImagem() {
+    private void atualizarImagem() {
 
-        java.net.URL url = getClass()
-                .getResource("/Imagem/Odontologia Temporaria.png");
-
-        if (url == null) {
-            System.out.println("Imagem não encontrada!");
-            return;
-        }
-
-        final Image imagem = new ImageIcon(url).getImage();
-
-        Imagem = new JLabel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                g.drawImage(
-                        imagem,
-                        0,
-                        0,
-                        getWidth(),
-                        getHeight(),
-                        this
-                );
-            }
-        };
-
-        Imagem.setBounds(
-                0,
-                0,
-                getContentPane().getWidth(),
-                getContentPane().getHeight()
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
         );
 
-        getContentPane().add(Imagem);
+        Image imagem = iconeOriginal.getImage();
 
-        // Imagem fica atrás
-        getContentPane().setComponentZOrder(
-                Imagem,
-                getContentPane().getComponentCount() - 1
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
         );
     }
 
     private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
-    dispose();
-    new Agendamento().setVisible(true);
+        dispose();
+        new Agendamento().setVisible(true);
     }//GEN-LAST:event_VoltarActionPerformed
 
     private void ConfirmaAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmaAgendamentoActionPerformed
-    String cpfpaciente = cpfpac.getText();
-    String cpfdentista = cpfdent.getText();
-    String dataatendimento = dataat.getText();
-    String HorarioAgendamento = HorAgend.getText();
-    
-    AgendamentoM agend = new AgendamentoM(cpfpaciente,cpfdentista,dataatendimento,HorarioAgendamento);
-    AgendamentoC agc = new AgendamentoC();
-    agc.CadastroAgendamento(agend);
-    
-    dispose();
-    new AgendamentoConcluido().setVisible(true);
+        String cpfpaciente = cpfpac.getText();
+        String cpfdentista = cpfdent.getText();
+        String dataatendimento = dataat.getText();
+        String HorarioAgendamento = HorAgend.getText();
+
+        AgendamentoM agend = new AgendamentoM(cpfpaciente,cpfdentista,dataatendimento,HorarioAgendamento);
+        AgendamentoC agc = new AgendamentoC();
+        agc.CadastroAgendamento(agend);
+
+        dispose();
+        new AgendamentoConcluido().setVisible(true);
     }//GEN-LAST:event_ConfirmaAgendamentoActionPerformed
 
     private void cpfpacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpfpacKeyTyped
-    if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
-            |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
-        if(cpfpac.getText().isEmpty()){
-          countCPF = 0;
+        if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
+                |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
+            if(cpfpac.getText().isEmpty()){
+                countCPF = 0;
+            }
+            countCPF = countCPF+1;
+            if (countCPF == 4)
+            {
+                cpfpac.setText(cpfpac.getText() + ".");
+                countCPF = countCPF+1;
+            }
+            if (countCPF == 8)
+            {
+                cpfpac.setText(cpfpac.getText() + ".");
+                countCPF = countCPF+1;
+            }
+            if (countCPF == 12){
+                cpfpac.setText(cpfpac.getText() + "-");
+                countCPF = countCPF+1;
+            }
         }
-        countCPF = countCPF+1;
-        if (countCPF == 4)
-    {
-        cpfpac.setText(cpfpac.getText() + ".");
-        countCPF = countCPF+1;
-    }
-    if (countCPF == 8)
-    {
-       cpfpac.setText(cpfpac.getText() + "."); 
-       countCPF = countCPF+1;
-    }
-    if (countCPF == 12){
-        cpfpac.setText(cpfpac.getText() + "-");
-        countCPF = countCPF+1;
-    }
-    }
-    
-    if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-        if (countCPF > 0){
-            countCPF = countCPF-1;
+
+        if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+            if (countCPF > 0){
+                countCPF = countCPF-1;
+            }
+            else if(countCPF == 1){
+                countCPF = countCPF-2;
+            }
+            else if(countCPF == 2){
+                countCPF = countCPF-2;
+            }
+            else if(countCPF == 3){
+                countCPF = countCPF-2;
+            }
+
         }
-        else if(countCPF == 1){
-        countCPF = countCPF-2;    
-        }
-        else if(countCPF == 2){
-        countCPF = countCPF-2;    
-        }
-        else if(countCPF == 3){
-        countCPF = countCPF-2;    
-        }
-        
-    }
     }//GEN-LAST:event_cpfpacKeyTyped
 
     private void cpfdentKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpfdentKeyTyped
         if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
-            |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
-        if(cpfdent.getText().isEmpty()){
-          countCPF2 = 0;
+                |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
+            if(cpfdent.getText().isEmpty()){
+                countCPF2 = 0;
+            }
+            countCPF2 = countCPF2+1;
+            if (countCPF2 == 4)
+            {
+                cpfdent.setText(cpfdent.getText() + ".");
+                countCPF2 = countCPF2+1;
+            }
+            if (countCPF2 == 8)
+            {
+                cpfdent.setText(cpfdent.getText() + ".");
+                countCPF2 = countCPF2+1;
+            }
+            if (countCPF2 == 12){
+                cpfdent.setText(cpfdent.getText() + "-");
+                countCPF2 = countCPF2+1;
+            }
         }
-        countCPF2 = countCPF2+1;
-        if (countCPF2 == 4)
-    {
-        cpfdent.setText(cpfdent.getText() + ".");
-        countCPF2 = countCPF2+1;
-    }
-    if (countCPF2 == 8)
-    {
-       cpfdent.setText(cpfdent.getText() + "."); 
-       countCPF2 = countCPF2+1;
-    }
-    if (countCPF2 == 12){
-        cpfdent.setText(cpfdent.getText() + "-");
-        countCPF2 = countCPF2+1;
-    }
-    }
-    
-    if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-        if (countCPF2 > 0){
-            countCPF2 = countCPF2-1;
+
+        if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+            if (countCPF2 > 0){
+                countCPF2 = countCPF2-1;
+            }
+            else if(countCPF2 == 1){
+                countCPF2 = countCPF2-2;
+            }
+            else if(countCPF2 == 2){
+                countCPF2 = countCPF2-2;
+            }
+            else if(countCPF2 == 3){
+                countCPF2 = countCPF2-2;
+            }
+
         }
-        else if(countCPF2 == 1){
-        countCPF2 = countCPF2-2;    
-        }
-        else if(countCPF2 == 2){
-        countCPF2 = countCPF2-2;    
-        }
-        else if(countCPF2 == 3){
-        countCPF2 = countCPF2-2;    
-        }
-        
-    }
     }//GEN-LAST:event_cpfdentKeyTyped
 
     private void dataatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dataatKeyTyped
-    
-    
-    if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
-            |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
-        if(dataat.getText().isEmpty()){
-            countData = 0;
-        }
+
+
+        if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
+                |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
+            if(dataat.getText().isEmpty()){
+                countData = 0;
+            }
             countData = countData+1;
-        if (countData == 3)
-    {
-        dataat.setText(dataat.getText() + "/");
-        countData = countData+1;
-    }
-    if (countData == 6)
-    {
-       dataat.setText(dataat.getText() + "/"); 
-       countData = countData+1;
-    }
-    }
-    
-    if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-        if (countData > 0){
-            countData = countData-1;
+            if (countData == 3)
+            {
+                dataat.setText(dataat.getText() + "/");
+                countData = countData+1;
+            }
+            if (countData == 6)
+            {
+                dataat.setText(dataat.getText() + "/");
+                countData = countData+1;
+            }
         }
-        else if(countData == 1){
-        countData = countData-2;    
+
+        if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+            if (countData > 0){
+                countData = countData-1;
+            }
+            else if(countData == 1){
+                countData = countData-2;
+            }
+            else if(countData == 3){
+                countData = countData-2;
+            }
+
         }
-        else if(countData == 3){
-        countData = countData-2;    
-        }
-        
-    }
     }//GEN-LAST:event_dataatKeyTyped
 
     private void HorAgendKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_HorAgendKeyTyped
-            if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
-            |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
-        if(HorAgend.getText().isEmpty()){
-          countAgend = 0;
+        if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
+                |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
+            if(HorAgend.getText().isEmpty()){
+                countAgend = 0;
+            }
+            countAgend = countAgend+1;
+            if (countAgend == 3)
+            {
+                HorAgend.setText(HorAgend.getText() + ":");
+                countAgend = countAgend+1;
+            }
         }
-        countAgend = countAgend+1;
-        if (countAgend == 3)
-    {
-        HorAgend.setText(HorAgend.getText() + ":");
-        countAgend = countAgend+1;
-    }
-    }
-    
-    if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-        if (countAgend > 0){
-            countAgend = countAgend-1;
+
+        if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+            if (countAgend > 0){
+                countAgend = countAgend-1;
+            }
+            else if(countAgend == 1){
+                countAgend = countAgend-2;
+            }
+
         }
-        else if(countAgend == 1){
-        countAgend = countAgend-2;    
-        }
-        
-    }
     }//GEN-LAST:event_HorAgendKeyTyped
 
     /**
@@ -341,7 +329,7 @@ public class NovoAgendamento extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -385,6 +373,8 @@ public class NovoAgendamento extends javax.swing.JFrame {
                 largura,
                 altura
         );
+
+        atualizarImagem();
 
 
         // ==============================
@@ -533,5 +523,3 @@ public class NovoAgendamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
-
-

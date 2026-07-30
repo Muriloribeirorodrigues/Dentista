@@ -19,11 +19,15 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
      */
     public AgendamentoConcluido() {
         initComponents();
-        ConfigurarImagem();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        // Ajusta a tela ao tamanho da janela
         addComponentListener(new java.awt.event.ComponentAdapter() {
-
             @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
                 ajustarTela();
@@ -50,14 +54,18 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         Retorna = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
 
+        Imagem.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agendamento Concluido");
-        setMaximumSize(new java.awt.Dimension(521, 275));
-        setMinimumSize(new java.awt.Dimension(521, 275));
+        setMaximumSize(new java.awt.Dimension(800, 533));
+        setMinimumSize(new java.awt.Dimension(800, 533));
         getContentPane().setLayout(null);
 
         getContentPane().add(Imagem);
-        Imagem.setBounds(-150, -170, 800, 533);
+        Imagem.setBounds(0, 0, 800, 533);
         jLabel2.setText("Agendamento Realizado");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(210, 40, 129, 16);
@@ -95,58 +103,40 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConfigurarImagem() {
+    private void atualizarImagem() {
 
-        java.net.URL url = getClass()
-                .getResource("/Imagem/Odontologia Temporaria.png");
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
 
-        if (url == null) {
-            System.out.println("Imagem não encontrada!");
-            return;
-        }
+        Image imagem = iconeOriginal.getImage();
 
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
 
-        Image imagem = new ImageIcon(url).getImage();
-
-
-        Imagem = new JLabel() {
-
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-
-                super.paintComponent(g);
-
-                g.drawImage(
-                        imagem,
-                        0,
-                        0,
-                        getWidth(),
-                        getHeight(),
-                        this
-                );
-            }
-        };
-
-
-        getContentPane().add(Imagem);
-        getContentPane().setComponentZOrder(ConsultaAgendamento, 0);
-        getContentPane().setComponentZOrder(RealizarAgendamento, 0);
-        getContentPane().setComponentZOrder(Retorna, 0);
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
     }
 
     private void RetornaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetornaActionPerformed
-    dispose();
-    new SelecionarOpcoes().setVisible(true);
+        dispose();
+        new SelecionarOpcoes().setVisible(true);
     }//GEN-LAST:event_RetornaActionPerformed
 
     private void RealizarAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarAgendamentoActionPerformed
-    dispose();
-    new NovoAgendamento().setVisible(true);
+        dispose();
+        new NovoAgendamento().setVisible(true);
     }//GEN-LAST:event_RealizarAgendamentoActionPerformed
 
     private void ConsultaAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaAgendamentoActionPerformed
-    dispose();
-    new ConsultaAgendamentos().setVisible(true);
+        dispose();
+        new ConsultaAgendamentos().setVisible(true);
     }//GEN-LAST:event_ConsultaAgendamentoActionPerformed
 
     /**
@@ -156,7 +146,7 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -188,8 +178,10 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         int largura = getContentPane().getWidth();
         int altura = getContentPane().getHeight();
 
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
 
-        // imagem ocupa toda a tela
         Imagem.setBounds(
                 0,
                 0,
@@ -197,43 +189,45 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
                 altura
         );
 
+        atualizarImagem();
 
-        int larguraBotao = 220;
+        // =====================================
+        // BOTÕES CENTRAIS
+        // =====================================
+
+        int larguraBotao = 240;
         int alturaBotao = 30;
-
+        int espacamento = 10;
 
         int x = (largura - larguraBotao) / 2;
-
-        int y = (altura / 2) - 50;
+        int y = (altura / 2) - 60;
 
         jLabel2.setBounds(
-                x + 40,
-                y - 80,
+                x,
+                y - (alturaBotao + espacamento),
                 larguraBotao,
                 alturaBotao
         );
 
-
         RealizarAgendamento.setBounds(
                 x,
-                y + 40,
+                y,
                 larguraBotao,
                 alturaBotao
         );
 
         ConsultaAgendamento.setBounds(
                 x,
-                y + 80,
+                y + (alturaBotao + espacamento),
                 larguraBotao,
                 alturaBotao
         );
 
-
         Retorna.setBounds(
-                15,
-                altura - 60,
-                45,
-                45
+                x,
+                y + (alturaBotao + espacamento) * 2,
+                larguraBotao,
+                alturaBotao
         );
     }
 

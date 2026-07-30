@@ -4,6 +4,8 @@
  */
 package Visao.Opcoes.Pacientes.Agendamento;
 import Controle.AgendamentoC;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -16,6 +18,24 @@ public class DeletarAgendamento extends javax.swing.JFrame {
      */
     public DeletarAgendamento() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -34,7 +54,7 @@ public class DeletarAgendamento extends javax.swing.JFrame {
         Deletar = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 533));
         setMinimumSize(new java.awt.Dimension(800, 533));
         getContentPane().setLayout(null);
@@ -78,20 +98,43 @@ public class DeletarAgendamento extends javax.swing.JFrame {
         Imagem.setBounds(0, 0, 800, 533);
 
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
     private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
-    dispose();
-    new Agendamento().setVisible(true);
+        dispose();
+        new Agendamento().setVisible(true);
     }//GEN-LAST:event_VoltarActionPerformed
 
     private void DeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletarActionPerformed
-    String CPF = CPFPac.getText();
-    AgendamentoC ag = new AgendamentoC();
-    ag.DeletarAgendamento(CPF);
-        
-    dispose();
-    new AgendamentoDeletado().setVisible(true);
+        String CPF = CPFPac.getText();
+        AgendamentoC ag = new AgendamentoC();
+        ag.DeletarAgendamento(CPF);
+
+        dispose();
+        new AgendamentoDeletado().setVisible(true);
     }//GEN-LAST:event_DeletarActionPerformed
 
     private void CPFPacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPFPacActionPerformed
@@ -105,7 +148,7 @@ public class DeletarAgendamento extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -131,6 +174,81 @@ public class DeletarAgendamento extends javax.swing.JFrame {
                 new DeletarAgendamento().setVisible(true);
             }
         });
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // FORMULÁRIO DE EXCLUSÃO
+        // =====================================
+
+        int larguraLabel = 160;
+        int larguraCampo = 150;
+        int alturaCampo = 22;
+        int larguraBotao = 150;
+        int alturaBotao = 23;
+        int espacamento = 10;
+
+        int larguraTotal = larguraLabel + espacamento + larguraCampo;
+        int x = (largura - larguraTotal) / 2;
+        int y = (altura / 2) - 40;
+
+        jLabel1.setBounds(
+                x,
+                y,
+                larguraLabel,
+                20
+        );
+
+        jLabel2.setBounds(
+                x,
+                y + 20,
+                larguraLabel,
+                20
+        );
+
+        int xCampo = x + larguraLabel + espacamento;
+
+        CPFPac.setBounds(
+                xCampo,
+                y + 10,
+                larguraCampo,
+                alturaCampo
+        );
+
+        Deletar.setBounds(
+                xCampo,
+                y + 10 + alturaCampo + espacamento,
+                larguraBotao,
+                alturaBotao
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                45,
+                45
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
