@@ -5,6 +5,9 @@
 package Visao.Opcoes.Pacientes.Agendamento;
 import Visao.Opcoes.SelecionarOpcoes;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  *
  * @author guto4
@@ -16,6 +19,20 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
      */
     public AgendamentoConcluido() {
         initComponents();
+        ConfigurarImagem();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -39,6 +56,8 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(521, 275));
         getContentPane().setLayout(null);
 
+        getContentPane().add(Imagem);
+        Imagem.setBounds(-150, -170, 800, 533);
         jLabel2.setText("Agendamento Realizado");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(210, 40, 129, 16);
@@ -61,7 +80,7 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         getContentPane().add(ConsultaAgendamento);
         ConsultaAgendamento.setBounds(150, 130, 240, 23);
 
-        Retorna.setText("Retornar Ao Menu De Opções");
+        Retorna.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/216437_back_arrow_icon.png"))); // NOI18N
         Retorna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RetornaActionPerformed(evt);
@@ -70,12 +89,50 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         getContentPane().add(Retorna);
         Retorna.setBounds(150, 170, 240, 23);
 
-        Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/Odontoloigia Temporaria2.png"))); // NOI18N
-        getContentPane().add(Imagem);
-        Imagem.setBounds(-150, -170, 800, 533);
 
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ConfigurarImagem() {
+
+        java.net.URL url = getClass()
+                .getResource("/Imagem/Odontologia Temporaria.png");
+
+        if (url == null) {
+            System.out.println("Imagem não encontrada!");
+            return;
+        }
+
+
+        Image imagem = new ImageIcon(url).getImage();
+
+
+        Imagem = new JLabel() {
+
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+
+                super.paintComponent(g);
+
+                g.drawImage(
+                        imagem,
+                        0,
+                        0,
+                        getWidth(),
+                        getHeight(),
+                        this
+                );
+            }
+        };
+
+
+        getContentPane().add(Imagem);
+        getContentPane().setComponentZOrder(ConsultaAgendamento, 0);
+        getContentPane().setComponentZOrder(RealizarAgendamento, 0);
+        getContentPane().setComponentZOrder(Retorna, 0);
+    }
 
     private void RetornaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetornaActionPerformed
     dispose();
@@ -125,6 +182,59 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
                 new AgendamentoConcluido().setVisible(true);
             }
         });
+    }
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+
+        // imagem ocupa toda a tela
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+
+        int larguraBotao = 220;
+        int alturaBotao = 30;
+
+
+        int x = (largura - larguraBotao) / 2;
+
+        int y = (altura / 2) - 50;
+
+        jLabel2.setBounds(
+                x + 40,
+                y - 80,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        RealizarAgendamento.setBounds(
+                x,
+                y + 40,
+                larguraBotao,
+                alturaBotao
+        );
+
+        ConsultaAgendamento.setBounds(
+                x,
+                y + 80,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        Retorna.setBounds(
+                15,
+                altura - 60,
+                45,
+                45
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

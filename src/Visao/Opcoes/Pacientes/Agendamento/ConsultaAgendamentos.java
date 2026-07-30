@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import Controle.AgendamentoC;
 import Visao.Opcoes.Pacientes.Consulta.ConsultaPacientes;
 import java.awt.event.KeyEvent;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -21,12 +23,41 @@ public class ConsultaAgendamentos extends javax.swing.JFrame {
     AgendamentoC ag = new AgendamentoC();
     public ConsultaAgendamentos() {
         initComponents();
-        campotabela.addColumn ("ID DO AGENDAMENTO:");
-        campotabela.addColumn ("NOME DO PACIENTE:");
-        campotabela.addColumn ("NOME DO DENTISTA:");
-        campotabela.addColumn ("DATA DO AGENDAMENTO:");
+
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+        jTable1.setOpaque(false);
+
+        campotabela.addColumn("ID DO AGENDAMENTO:");
+        campotabela.addColumn("NOME DO PACIENTE:");
+        campotabela.addColumn("NOME DO DENTISTA:");
+        campotabela.addColumn("DATA DO AGENDAMENTO:");
         campotabela.addColumn("HORÁRIO");
+
         jTable1.setModel(campotabela);
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(
+                new java.awt.event.ComponentAdapter() {
+
+                    @Override
+                    public void componentResized(
+                            java.awt.event.ComponentEvent e) {
+
+                        ajustarTela();
+                    }
+                }
+        );
+
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -47,11 +78,18 @@ public class ConsultaAgendamentos extends javax.swing.JFrame {
         BuscaCPF = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
 
+        Imagem.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Agendamentos");
         setMaximumSize(new java.awt.Dimension(800, 533));
         setMinimumSize(new java.awt.Dimension(800, 533));
         getContentPane().setLayout(null);
+
+        getContentPane().add(Imagem);
+        Imagem.setBounds(0, 0, 800, 533);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,11 +146,10 @@ public class ConsultaAgendamentos extends javax.swing.JFrame {
         getContentPane().add(BuscaCPF);
         BuscaCPF.setBounds(655, 70, 130, 23);
 
-        Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/Odontologia Temporaria.png"))); // NOI18N
-        getContentPane().add(Imagem);
-        Imagem.setBounds(0, 0, 800, 533);
 
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConsultaGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaGeralActionPerformed
@@ -240,6 +277,159 @@ public class ConsultaAgendamentos extends javax.swing.JFrame {
                 new ConsultaAgendamentos().setVisible(true);
             }
         });
+    }
+
+    private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // PESQUISA POR CPF
+        // =====================================
+
+        int larguraLabel = 170;
+        int larguraCampo = 180;
+        int alturaCampo = 25;
+
+        int larguraBotao = 140;
+        int alturaBotao = 30;
+
+        int espacamento = 10;
+
+
+        // Largura total da área superior
+        int larguraTotal =
+                larguraLabel
+                        + espacamento
+                        + larguraCampo
+                        + espacamento
+                        + larguraBotao
+                        + espacamento
+                        + larguraBotao;
+
+
+        // Centraliza horizontalmente
+        int x = (largura - larguraTotal) / 2;
+
+        int y = 35;
+
+
+        // =====================================
+        // LABEL
+        // =====================================
+
+        jLabel2.setBounds(
+                x,
+                y,
+                larguraLabel,
+                alturaCampo
+        );
+
+
+        // =====================================
+        // CPF
+        // =====================================
+
+        int xCPF =
+                x + larguraLabel + espacamento;
+
+        jCPF.setBounds(
+                xCPF,
+                y,
+                larguraCampo,
+                alturaCampo
+        );
+
+
+        // =====================================
+        // CONSULTA GERAL
+        // =====================================
+
+        int xConsultaGeral =
+                xCPF + larguraCampo + espacamento;
+
+        ConsultaGeral.setBounds(
+                xConsultaGeral,
+                y,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        // =====================================
+        // CONSULTA POR CPF
+        // =====================================
+
+        int xBuscaCPF =
+                xConsultaGeral + larguraBotao + espacamento;
+
+        BuscaCPF.setBounds(
+                xBuscaCPF,
+                y,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        // =====================================
+        // TABELA
+        // =====================================
+
+        int margem = 40;
+
+        jScrollPane1.setBounds(
+                margem,
+                100,
+                largura - (margem * 2),
+                altura - 170
+        );
+
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                45,
+                45
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
