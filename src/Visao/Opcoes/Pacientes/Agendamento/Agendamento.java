@@ -5,6 +5,8 @@
 package Visao.Opcoes.Pacientes.Agendamento;
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import Visao.Opcoes.Pacientes.Agendamento.NovoAgendamento;
+import java.awt.Image;
+import javax.swing.*;
 
 /**
  *
@@ -17,6 +19,18 @@ public class Agendamento extends javax.swing.JFrame {
      */
     public Agendamento() {
         initComponents();
+        ConfigurarImagem();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        addComponentListener(new java.awt.event.ComponentAdapter(){
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -41,6 +55,8 @@ public class Agendamento extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 533));
         getContentPane().setLayout(null);
 
+        getContentPane().add(Imagem);
+        Imagem.setBounds(0, 0, 800, 533);
         Voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/216437_back_arrow_icon.png"))); // NOI18N
         Voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,12 +102,52 @@ public class Agendamento extends javax.swing.JFrame {
         getContentPane().add(AtualizarAgendamento);
         AtualizarAgendamento.setBounds(270, 290, 250, 23);
 
-        Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/Odontologia Temporaria.png"))); // NOI18N
-        getContentPane().add(Imagem);
-        Imagem.setBounds(0, 0, 800, 533);
-
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ConfigurarImagem() {
+
+        java.net.URL url = getClass()
+                .getResource("/Imagem/Odontologia Temporaria.png");
+
+        if (url == null) {
+            System.out.println("Imagem não encontrada!");
+            return;
+        }
+
+
+        Image imagem = new ImageIcon(url).getImage();
+
+
+        Imagem = new JLabel() {
+
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+
+                super.paintComponent(g);
+
+                g.drawImage(
+                        imagem,
+                        0,
+                        0,
+                        getWidth(),
+                        getHeight(),
+                        this
+                );
+            }
+        };
+
+
+        getContentPane().add(Imagem);
+        getContentPane().setComponentZOrder(AtualizarAgendamento, 0);
+        getContentPane().setComponentZOrder(ConsultaAgendamento, 0);
+        getContentPane().setComponentZOrder(DeletarAgendamento, 0);
+        getContentPane().setComponentZOrder(NovoAgendamento, 0);
+        getContentPane().setComponentZOrder(Voltar, 0);
+
+    }
 
     private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
     dispose();
@@ -151,6 +207,69 @@ public class Agendamento extends javax.swing.JFrame {
                 new Agendamento().setVisible(true);
             }
         });
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+
+        // imagem ocupa toda a tela
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+
+        int larguraBotao = 220;
+        int alturaBotao = 30;
+
+
+        int x = (largura - larguraBotao) / 2;
+
+        int y = (altura / 2) - 50;
+
+        AtualizarAgendamento.setBounds(
+                x,
+                y+80,
+                larguraBotao,
+                alturaBotao
+        );
+
+        ConsultaAgendamento.setBounds(
+                x,
+                y+40,
+                larguraBotao,
+                alturaBotao
+        );
+
+        DeletarAgendamento.setBounds(
+                x,
+                y+120,
+                larguraBotao,
+                alturaBotao
+        );
+
+        NovoAgendamento.setBounds(
+                x,
+                y,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                45,
+                45
+        );
+
+
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

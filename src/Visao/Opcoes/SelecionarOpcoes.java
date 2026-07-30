@@ -7,6 +7,8 @@ package Visao.Opcoes;
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import Visao.Opcoes.Dentistas.OpcoesDentistas;
 import Visao.TelaInicial.TelaInicial;
+import java.awt.Image;
+import javax.swing.*;
 
 /**
  *
@@ -18,7 +20,23 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
      * Creates new form SelecionarOpcoes
      */
     public SelecionarOpcoes() {
+
         initComponents();
+
+        ConfigurarImagem();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -30,64 +48,100 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Selecionar_Paciente = new javax.swing.JButton();
-        Selecionar_dentistas = new javax.swing.JButton();
-        VoltarTelaInicial = new javax.swing.JButton();
+        BtnPacientes = new javax.swing.JButton();
+        BtnDentista = new javax.swing.JButton();
+        BtnTelaInicial = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Selecionar Opções");
         setMinimumSize(new java.awt.Dimension(801, 528));
         getContentPane().setLayout(null);
-
-        Selecionar_Paciente.setText("Opções para Pacientes");
-        Selecionar_Paciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Selecionar_PacienteActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Selecionar_Paciente);
-        Selecionar_Paciente.setBounds(300, 240, 210, 23);
-
-        Selecionar_dentistas.setText("Opções para Dentistas");
-        Selecionar_dentistas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Selecionar_dentistasActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Selecionar_dentistas);
-        Selecionar_dentistas.setBounds(300, 290, 210, 23);
-
-        VoltarTelaInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/216437_back_arrow_icon.png"))); // NOI18N
-        VoltarTelaInicial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VoltarTelaInicialActionPerformed(evt);
-            }
-        });
-        getContentPane().add(VoltarTelaInicial);
-        VoltarTelaInicial.setBounds(0, 460, 60, 30);
-
-        Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/Odontologia Temporaria.png"))); // NOI18N
+        // NOI18N
         getContentPane().add(Imagem);
         Imagem.setBounds(0, 0, 800, 530);
 
+        BtnPacientes.setText("Opções para Pacientes");
+        BtnPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPacientesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BtnPacientes);
+        BtnPacientes.setBounds(300, 240, 210, 23);
+
+        BtnDentista.setText("Opções para Dentistas");
+        BtnDentista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDentistaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BtnDentista);
+        BtnDentista.setBounds(300, 290, 210, 23);
+
+        BtnTelaInicial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/216437_back_arrow_icon.png"))); // NOI18N
+        BtnTelaInicial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnTelaInicialActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BtnTelaInicial);
+        BtnTelaInicial.setBounds(0, 460, 60, 30);
+
+
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    private void ConfigurarImagem() {
 
-    private void VoltarTelaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarTelaInicialActionPerformed
-        dispose();
-        new TelaInicial().setVisible(true);
-    }//GEN-LAST:event_VoltarTelaInicialActionPerformed
+        java.net.URL url = getClass()
+                .getResource("/Imagem/Odontologia Temporaria.png");
 
-    private void Selecionar_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Selecionar_PacienteActionPerformed
-     dispose();
-     new OpcoesPacientes().setVisible(true);
-    }//GEN-LAST:event_Selecionar_PacienteActionPerformed
+        if (url == null) {
+            System.out.println("Imagem não encontrada!");
+            return;
+        }
 
-    private void Selecionar_dentistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Selecionar_dentistasActionPerformed
-    dispose();
-    new OpcoesDentistas().setVisible(true);
-    }//GEN-LAST:event_Selecionar_dentistasActionPerformed
+
+        Image imagem = new ImageIcon(url).getImage();
+
+
+        Imagem = new JLabel() {
+
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+
+                super.paintComponent(g);
+
+                g.drawImage(
+                        imagem,
+                        0,
+                        0,
+                        getWidth(),
+                        getHeight(),
+                        this
+                );
+            }
+        };
+
+
+        getContentPane().add(Imagem);
+        getContentPane().setComponentZOrder(BtnPacientes, 0);
+        getContentPane().setComponentZOrder(BtnDentista, 0);
+        getContentPane().setComponentZOrder(BtnTelaInicial, 0);
+
+    }
+    private void BtnTelaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTelaInicialActionPerformed
+        abrirTela(new TelaInicial());
+    }//GEN-LAST:event_BtnTelaInicialActionPerformed
+
+    private void BtnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPacientesActionPerformed
+     abrirTela(new OpcoesPacientes());
+    }//GEN-LAST:event_BtnPacientesActionPerformed
+
+    private void BtnDentistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDentistaActionPerformed
+    abrirTela(new OpcoesDentistas());
+    }//GEN-LAST:event_BtnDentistaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,17 +171,75 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SelecionarOpcoes().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() ->
+                new SelecionarOpcoes().setVisible(true)
+        );
+    }
+
+    private void abrirTela(javax.swing.JFrame tela) {
+        dispose();
+        tela.setLocationRelativeTo(null); // Centraliza a janela
+        tela.setVisible(true);
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+
+        // imagem ocupa toda a tela
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+
+        int larguraBotao = 220;
+        int alturaBotao = 30;
+
+
+        int x = (largura - larguraBotao) / 2;
+
+        int y = (altura / 2) - 50;
+
+
+        BtnPacientes.setBounds(
+                x,
+                y,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        BtnDentista.setBounds(
+                x,
+                y + 50,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        BtnTelaInicial.setBounds(
+                15,
+                altura - 60,
+                45,
+                45
+        );
+
+
+        Imagem.repaint();
+        BtnPacientes.repaint();
+        BtnDentista.repaint();
+        BtnTelaInicial.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imagem;
-    private javax.swing.JButton Selecionar_Paciente;
-    private javax.swing.JButton Selecionar_dentistas;
-    private javax.swing.JButton VoltarTelaInicial;
+    private javax.swing.JButton BtnPacientes;
+    private javax.swing.JButton BtnDentista;
+    private javax.swing.JButton BtnTelaInicial;
     // End of variables declaration//GEN-END:variables
 }

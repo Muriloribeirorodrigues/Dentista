@@ -12,6 +12,8 @@ import Visao.Opcoes.Pacientes.Deletar.DeletarPaciente;
 import Visao.Opcoes.Pacientes.Agendamento.Agendamento;
 import Visao.Opcoes.Pacientes.Atualizacao.AtualizaDadosPessoais;
 import Visao.Opcoes.Pacientes.Atualizacao.AtualizaEndereco;
+import java.awt.Image;
+import javax.swing.*;
 
 /**
  *
@@ -24,6 +26,20 @@ public class OpcoesPacientes extends javax.swing.JFrame {
      */
     public OpcoesPacientes() {
         initComponents();
+        ConfigurarImagem();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -50,6 +66,8 @@ public class OpcoesPacientes extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(801, 528));
         getContentPane().setLayout(null);
 
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 800, 530);
         Cadastro_Paciente.setText("Cadastrar Paciente");
         Cadastro_Paciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,14 +140,57 @@ public class OpcoesPacientes extends javax.swing.JFrame {
             }
         });
         getContentPane().add(AtualizarEndereco);
-        AtualizarEndereco.setBounds(310, 270, 220, 23);
+        AtualizarEndereco.setBounds(310, 270, 200, 23);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/Odontologia Temporaria.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 800, 530);
 
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ConfigurarImagem() {
+
+        java.net.URL url = getClass()
+                .getResource("/Imagem/Odontologia Temporaria.png");
+
+        if (url == null) {
+            System.out.println("Imagem não encontrada!");
+            return;
+        }
+
+
+        Image imagem = new ImageIcon(url).getImage();
+
+
+        jLabel1 = new JLabel() {
+
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+
+                super.paintComponent(g);
+
+                g.drawImage(
+                        imagem,
+                        0,
+                        0,
+                        getWidth(),
+                        getHeight(),
+                        this
+                );
+            }
+        };
+
+
+        getContentPane().add(jLabel1);
+        getContentPane().setComponentZOrder(AgendarPaciente, 0);
+        getContentPane().setComponentZOrder(Cadastro_Paciente, 0);
+        getContentPane().setComponentZOrder(CadastroEndereco, 0);
+        getContentPane().setComponentZOrder(ConsultaPaciente, 0);
+        getContentPane().setComponentZOrder(DeletarPaciente, 0);
+        getContentPane().setComponentZOrder(VoltarAsOpcoes, 0);
+        getContentPane().setComponentZOrder(AtualizarDadosPaciente, 0);
+        getContentPane().setComponentZOrder(AtualizarEndereco, 0);
+    }
 
     private void ConsultaPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaPacienteActionPerformed
     dispose();
@@ -204,6 +265,88 @@ public class OpcoesPacientes extends javax.swing.JFrame {
                 new OpcoesPacientes().setVisible(true);
             }
         });
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+
+        // imagem ocupa toda a tela
+        jLabel1.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+
+        int larguraBotao = 220;
+        int alturaBotao = 30;
+
+
+        int x = (largura - larguraBotao) / 2;
+
+        int y = (altura / 2) - 50;
+
+        AgendarPaciente.setBounds(
+                x,
+                y+160,
+                larguraBotao,
+                alturaBotao
+        );
+
+        Cadastro_Paciente.setBounds(
+                x,
+                y,
+                larguraBotao,
+                alturaBotao
+        );
+
+        CadastroEndereco.setBounds(
+                x,
+                y+40,
+                larguraBotao,
+                alturaBotao
+        );
+
+        ConsultaPaciente.setBounds(
+                x,
+                y+200,
+                larguraBotao,
+                alturaBotao
+        );
+
+        DeletarPaciente.setBounds(
+                x,
+                y+240,
+                larguraBotao,
+                alturaBotao
+        );
+
+        VoltarAsOpcoes.setBounds(
+                15,
+                altura - 60,
+                45,
+                45
+        );
+
+        AtualizarDadosPaciente.setBounds(
+                x,
+                y+80,
+                larguraBotao,
+                alturaBotao
+        );
+
+        AtualizarEndereco.setBounds(
+                x,
+                y+120,
+                larguraBotao,
+                alturaBotao
+        );
+
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

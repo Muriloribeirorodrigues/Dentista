@@ -4,6 +4,8 @@
  */
 package Visao.Opcoes.Dentistas.Agendamento;
 import Visao.Opcoes.Dentistas.OpcoesDentistas;
+import java.awt.Image;
+import javax.swing.*;
 
 /**
  *
@@ -16,6 +18,18 @@ public class Agendamento extends javax.swing.JFrame {
      */
     public Agendamento() {
         initComponents();
+        ConfigurarImagem();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        addComponentListener(new java.awt.event.ComponentAdapter(){
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -38,6 +52,8 @@ public class Agendamento extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 533));
         getContentPane().setLayout(null);
 
+        getContentPane().add(Imagem);
+        Imagem.setBounds(0, 0, 800, 533);
         jButton1.setText("Consultar Agendamentos");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,12 +81,50 @@ public class Agendamento extends javax.swing.JFrame {
         getContentPane().add(jButton3);
         jButton3.setBounds(0, 460, 75, 40);
 
-        Imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/Odontologia Temporaria.png"))); // NOI18N
-        getContentPane().add(Imagem);
-        Imagem.setBounds(0, 0, 800, 533);
 
         pack();
+        setSize(801, 528);
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ConfigurarImagem() {
+
+        java.net.URL url = getClass()
+                .getResource("/Imagem/Odontologia Temporaria.png");
+
+        if (url == null) {
+            System.out.println("Imagem não encontrada!");
+            return;
+        }
+
+
+        Image imagem = new ImageIcon(url).getImage();
+
+
+        Imagem = new JLabel() {
+
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+
+                super.paintComponent(g);
+
+                g.drawImage(
+                        imagem,
+                        0,
+                        0,
+                        getWidth(),
+                        getHeight(),
+                        this
+                );
+            }
+        };
+
+
+        getContentPane().add(Imagem);
+        getContentPane().setComponentZOrder(jButton1, 0);
+        getContentPane().setComponentZOrder(jButton2, 0);
+        getContentPane().setComponentZOrder(jButton3, 0);
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     dispose();
@@ -120,6 +174,60 @@ public class Agendamento extends javax.swing.JFrame {
                 new Agendamento().setVisible(true);
             }
         });
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+
+        // imagem ocupa toda a tela
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+
+        int larguraBotao = 220;
+        int alturaBotao = 30;
+
+
+        int x = (largura - larguraBotao) / 2;
+
+        int y = (altura / 2) - 50;
+
+
+        jButton1.setBounds(
+                x,
+                y,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        jButton2.setBounds(
+                x,
+                y + 50,
+                larguraBotao,
+                alturaBotao
+        );
+
+
+        jButton3.setBounds(
+                15,
+                altura - 60,
+                45,
+                45
+        );
+
+
+        Imagem.repaint();
+        jButton1.repaint();
+        jButton2.repaint();
+        jButton3.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

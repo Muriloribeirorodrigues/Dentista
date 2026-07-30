@@ -16,7 +16,9 @@ public class TelaInicial extends JFrame {
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        ajustarTela();
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
 
         // Atualiza posições quando redimensionar
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -131,6 +133,8 @@ public class TelaInicial extends JFrame {
 
         // Adiciona o painel por cima
         add(jPanel1);
+        getContentPane().setComponentZOrder(jPanel1, 0);
+        getContentPane().setComponentZOrder(Imagem, 1);
 
 
         setSize(801, 528);
@@ -164,13 +168,18 @@ public class TelaInicial extends JFrame {
 
 
         // botão no centro
-        IniciarAplicativo.setLocation(
-                (largura - IniciarAplicativo.getWidth()) / 2,
-                (altura - IniciarAplicativo.getHeight()) / 2
+        IniciarAplicativo.setBounds(
+                (largura - 160)/2,
+                (altura - 40)/2,
+                160,
+                40
         );
 
-
-        repaint();
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        System.out.println(IniciarAplicativo.getBounds());
+        System.out.println(IniciarAplicativo.isVisible());
+        System.out.println(jPanel1.getComponentCount());
     }
 
 
