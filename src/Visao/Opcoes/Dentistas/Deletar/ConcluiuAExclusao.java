@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Deletar;
+import java.awt.*;
+import javax.swing.*;
 import Visao.Opcoes.SelecionarOpcoes;
 import Visao.Opcoes.Dentistas.Cadastro.CadastroDentista;
 /**
@@ -16,6 +18,24 @@ public class ConcluiuAExclusao extends javax.swing.JFrame {
      */
     public ConcluiuAExclusao() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -33,7 +53,7 @@ public class ConcluiuAExclusao extends javax.swing.JFrame {
         RetornaAoMenuDeOpcoes = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(521, 275));
         setMinimumSize(new java.awt.Dimension(521, 275));
         getContentPane().setLayout(null);
@@ -98,7 +118,7 @@ public class ConcluiuAExclusao extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -124,6 +144,81 @@ public class ConcluiuAExclusao extends javax.swing.JFrame {
                 new ConcluiuAExclusao().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontoloigia Temporaria2.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        jLabel1.setBounds(
+                cx - 50,
+                cy - 76,
+                100,
+                16
+        );
+
+        ExcluirDentista.setBounds(
+                cx - 100,
+                cy - 26,
+                200,
+                23
+        );
+
+        CadastroDentista.setBounds(
+                cx - 100,
+                cy + 14,
+                200,
+                23
+        );
+
+        RetornaAoMenuDeOpcoes.setBounds(
+                cx - 100,
+                cy + 54,
+                200,
+                23
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

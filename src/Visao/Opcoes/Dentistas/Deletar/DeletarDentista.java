@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Deletar;
+import java.awt.*;
+import javax.swing.*;
 import Visao.Opcoes.Dentistas.OpcoesDentistas;
 import Controle.DadosPessoaisC;
 import java.awt.event.KeyEvent;
@@ -18,6 +20,24 @@ public class DeletarDentista extends javax.swing.JFrame {
      */
     public DeletarDentista() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -87,7 +107,7 @@ public class DeletarDentista extends javax.swing.JFrame {
     String CPF = tCPF.getText();
     DadosPessoaisC dp = new DadosPessoaisC();
     dp.DeletarRegistroDentistas(CPF);
-    
+
     dispose();
     new ConcluiuAExclusao().setVisible(true);
     }//GEN-LAST:event_DeletarDentistaActionPerformed
@@ -114,21 +134,21 @@ public class DeletarDentista extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
         }
         else if(countCPF == 1){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 2){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 3){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
-        
+
     }
     }//GEN-LAST:event_tCPFKeyTyped
 
@@ -139,7 +159,7 @@ public class DeletarDentista extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -165,6 +185,85 @@ public class DeletarDentista extends javax.swing.JFrame {
                 new DeletarDentista().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        DeletarDentista.setBounds(
+                cx + 44,
+                cy + 8,
+                150,
+                23
+        );
+
+        jLabel1.setBounds(
+                cx - 206,
+                cy - 32,
+                270,
+                20
+        );
+
+        tCPF.setBounds(
+                cx + 86,
+                cy - 32,
+                120,
+                22
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                80,
+                40
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Pacientes.Atualizacao;
+import java.awt.*;
+import javax.swing.*;
 import Controle.EnderecoC;
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import java.awt.event.KeyEvent;
@@ -18,6 +20,24 @@ public class AtualizaEndereco extends javax.swing.JFrame {
      */
     public AtualizaEndereco() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -121,9 +141,7 @@ public class AtualizaEndereco extends javax.swing.JFrame {
         int Item = Integer.parseInt(tItem.getText());
         end.AtualizaClientesNumero(CPF, Item);
     }
-        
-        
-        
+
     dispose();
     new AtualizaEnderecoConcluido().setVisible(true);
     }//GEN-LAST:event_ConfirmaAtualizacaoActionPerformed
@@ -147,7 +165,7 @@ public class AtualizaEndereco extends javax.swing.JFrame {
     }
     if (countCPF == 8)
     {
-       tCPF.setText(tCPF.getText() + "."); 
+       tCPF.setText(tCPF.getText() + ".");
        countCPF = countCPF+1;
     }
     if (countCPF == 12){
@@ -155,26 +173,26 @@ public class AtualizaEndereco extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
         }
         else if(countCPF == 1){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 2){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 3){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
     }
     }//GEN-LAST:event_tCPFKeyTyped
 
     private void tItemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tItemKeyTyped
     String tOP = tOpcao.getSelectedItem().toString();
-    
+
     if (tOP == "Cep"){
         if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
             |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
@@ -189,22 +207,22 @@ public class AtualizaEndereco extends javax.swing.JFrame {
     }
     if (countItem == 7)
     {
-       tItem.setText(tItem.getText() + "-"); 
+       tItem.setText(tItem.getText() + "-");
        countItem = countItem+1;
     }
     }
-  
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countItem > 0){
             countItem = countItem-1;
         }
         else if(countItem == 1){
-        countItem = countItem-2;    
+        countItem = countItem-2;
         }
         else if(countItem == 3){
-        countItem = countItem-2;    
+        countItem = countItem-2;
         }
-        
+
     }
      }
     }//GEN-LAST:event_tItemKeyTyped
@@ -216,7 +234,7 @@ public class AtualizaEndereco extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -242,6 +260,99 @@ public class AtualizaEndereco extends javax.swing.JFrame {
                 new AtualizaEndereco().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        jLabel1.setBounds(
+                cx - 156,
+                cy - 42,
+                160,
+                20
+        );
+
+        ConfirmaAtualizacao.setBounds(
+                cx + 4,
+                cy + 18,
+                150,
+                23
+        );
+
+        tCPF.setBounds(
+                cx + 6,
+                cy - 42,
+                150,
+                22
+        );
+
+        tItem.setBounds(
+                cx + 6,
+                cy - 12,
+                150,
+                22
+        );
+
+        tOpcao.setBounds(
+                cx - 156,
+                cy - 12,
+                140,
+                22
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        jButton2.setBounds(
+                15,
+                altura - 60,
+                75,
+                30
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

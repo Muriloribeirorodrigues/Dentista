@@ -136,133 +136,133 @@ public class AtualizarAgendamento extends javax.swing.JFrame {
     }
 
     private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
-        dispose();
-        new Agendamento().setVisible(true);
+    dispose();
+    new Agendamento().setVisible(true);
     }//GEN-LAST:event_VoltarActionPerformed
 
     private void ConfirmaAtualizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmaAtualizacaoActionPerformed
-        String Selecao = cmbEscolha.getSelectedItem().toString();
-        String ID = tID.getText();
-        String Item = tItem.getText();
-        AgendamentoC agend = new AgendamentoC();
-
-        if(Selecao == "Dia Do Atendimento"){
-            agend.AtualizaAgendamentoDiaClientes(ID, Item);
-        }
-        if(Selecao == "Cpf Do Dentista"){
-            agend.AtualizaAgendamentoDentistasClientes(ID, Item);
-        }
-        if(Selecao=="Horario Do Agendamento")
-        {
-            agend.AtualizaAgendamentoHoarioClientes(ID, Item);
-        }
-        dispose();
-        new AtualizacaoConcluida().setVisible(true);
+    String Selecao = cmbEscolha.getSelectedItem().toString();
+    String ID = tID.getText();
+    String Item = tItem.getText();
+    AgendamentoC agend = new AgendamentoC();
+    
+    if(Selecao == "Dia Do Atendimento"){
+      agend.AtualizaAgendamentoDiaClientes(ID, Item);
+    }
+    if(Selecao == "Cpf Do Dentista"){
+        agend.AtualizaAgendamentoDentistasClientes(ID, Item);
+    }
+    if(Selecao=="Horario Do Agendamento")
+    {
+        agend.AtualizaAgendamentoHoarioClientes(ID, Item);
+    }
+    dispose();
+    new AtualizacaoConcluida().setVisible(true);
     }//GEN-LAST:event_ConfirmaAtualizacaoActionPerformed
 
     private void tItemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tItemKeyTyped
-        String Selecao = cmbEscolha.getSelectedItem().toString();
-
-        if(Selecao == "Dia Do Atendimento"){
-            if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
-                    |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
-                if(tItem.getText().isEmpty()){
-                    countData = 0;
-                }
-                countData = countData+1;
-                if (countData == 3)
-                {
-                    tItem.setText(tItem.getText() + "/");
-                    countData = countData+1;
-                }
-                if (countData == 6)
-                {
-                    tItem.setText(tItem.getText() + "/");
-                    countData = countData+1;
-                }
-            }
-
-            if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-                if (countData > 0){
-                    countData = countData-1;
-                }
-                else if (countData == 1)
-                {
-                    countData = countData-2;
-                }
-                else if (countData == 3)
-                {
-                    countData = countData-2;
-                }
-
-            }
+    String Selecao = cmbEscolha.getSelectedItem().toString();
+        
+    if(Selecao == "Dia Do Atendimento"){
+          if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
+            |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
+        if(tItem.getText().isEmpty()){
+            countData = 0;
         }
-        if(Selecao == "Cpf Do Dentista"){
-            if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
-                    |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
-                if(tItem.getText().isEmpty()){
-                    countCPF = 0;
-                }
-                countCPF = countCPF+1;
-                if (countCPF == 4)
-                {
-                    tItem.setText(tItem.getText() + ".");
-                    countCPF = countCPF+1;
-                }
-                if (countCPF == 8)
-                {
-                    tItem.setText(tItem.getText() + ".");
-                    countCPF = countCPF+1;
-                }
-                if (countCPF == 12){
-                    tItem.setText(tItem.getText() + "-");
-                    countCPF = countCPF+1;
-                }
-            }
-
-            if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-                if (countCPF > 0){
-                    countCPF = countCPF-1;
-                }
-                else if (countCPF == 1)
-                {
-                    countCPF = countCPF-2;
-                }
-                else if (countCPF == 2)
-                {
-                    countCPF = countCPF-2;
-                }
-                else if (countCPF == 3)
-                {
-                    countCPF = countCPF-2;
-                }
-            }
+        countData = countData+1;
+        if (countData == 3)
+        {
+        tItem.setText(tItem.getText() + "/");
+        countData = countData+1;
         }
-        if(Selecao == "Horario Do Agendamento"){
-            if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
-                    |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
-                if(tItem.getText().isEmpty()){
-                    countAgend = 0;
-                }
-                countAgend = countAgend+1;
-                if (countAgend == 3)
-                {
-                    tItem.setText(tItem.getText() + ":");
-                    countAgend = countAgend+1;
-                }
-            }
-
-            if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
-                if (countAgend > 0){
-                    countAgend = countAgend-1;
-                }
-                else if(countAgend == 1){
-                    countAgend = countAgend-2;
-                }
-
-            }
+        if (countData == 6)
+        {
+        tItem.setText(tItem.getText() + "/"); 
+        countData = countData+1;
         }
-
+        }
+    
+    if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+        if (countData > 0){
+            countData = countData-1;
+        }
+        else if (countData == 1)
+        {
+        countData = countData-2;
+        }
+        else if (countData == 3)
+        {
+       countData = countData-2;
+        }
+        
+    }
+    }
+    if(Selecao == "Cpf Do Dentista"){
+      if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
+            |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
+        if(tItem.getText().isEmpty()){
+          countCPF = 0;
+        }
+        countCPF = countCPF+1;
+        if (countCPF == 4)
+    {
+        tItem.setText(tItem.getText() + ".");
+        countCPF = countCPF+1;
+    }
+    if (countCPF == 8)
+    {
+       tItem.setText(tItem.getText() + "."); 
+       countCPF = countCPF+1;
+    }
+    if (countCPF == 12){
+        tItem.setText(tItem.getText() + "-");
+        countCPF = countCPF+1;
+    }
+    }
+    
+    if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+        if (countCPF > 0){
+            countCPF = countCPF-1;
+        }
+        else if (countCPF == 1)
+        {
+        countCPF = countCPF-2;
+        }
+        else if (countCPF == 2)
+        {
+       countCPF = countCPF-2;
+        }
+        else if (countCPF == 3)
+        {
+        countCPF = countCPF-2;
+        }
+    }
+    }
+    if(Selecao == "Horario Do Agendamento"){
+                    if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
+            |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
+        if(tItem.getText().isEmpty()){
+          countAgend = 0;
+        }
+        countAgend = countAgend+1;
+        if (countAgend == 3)
+    {
+        tItem.setText(tItem.getText() + ":");
+        countAgend = countAgend+1;
+    }
+    }
+    
+    if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
+        if (countAgend > 0){
+            countAgend = countAgend-1;
+        }
+        else if(countAgend == 1){
+        countAgend = countAgend-2;    
+        }
+        
+    }
+    }
+    
     }//GEN-LAST:event_tItemKeyTyped
 
     /**
@@ -272,7 +272,7 @@ public class AtualizarAgendamento extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

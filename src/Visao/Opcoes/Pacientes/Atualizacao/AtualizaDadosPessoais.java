@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Pacientes.Atualizacao;
+import java.awt.*;
+import javax.swing.*;
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import Controle.DadosPessoaisC;
 import java.awt.event.KeyEvent;
@@ -19,6 +21,24 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
      */
     public AtualizaDadosPessoais() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -110,7 +130,7 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
     if (Top == "Informe O Nome"){
         dp.AtualizaClientesNome(CPF, Item);
     }
-    
+
     dispose();
     new AtualizaDadosConcluido().setVisible(true);
     }//GEN-LAST:event_ConfirmaAtualizacaoActionPerformed
@@ -129,7 +149,7 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
     }
     if (countCPF == 8)
     {
-       tCPF.setText(tCPF.getText() + "."); 
+       tCPF.setText(tCPF.getText() + ".");
        countCPF = countCPF+1;
     }
     if (countCPF == 12){
@@ -137,21 +157,21 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
         }
         else if(countCPF == 1){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 2){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 3){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
-        
+
     }
     }//GEN-LAST:event_tCPFKeyTyped
 
@@ -171,7 +191,7 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
     }
     if (countContato == 4)
     {
-       tItem.setText(tItem.getText() + ")"); 
+       tItem.setText(tItem.getText() + ")");
        countContato = countContato+1;
     }
     if (countContato == 10){
@@ -179,21 +199,21 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
         countContato = countContato+1;
     }
     }
-  
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countContato > 0){
             countContato = countContato-1;
         }
         else if(countContato == 1){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
         else if(countContato == 4){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
         else if(countContato == 10){
-        countContato = countContato-2;   
+        countContato = countContato-2;
         }
-        
+
     }
      }
     }//GEN-LAST:event_tItemKeyTyped
@@ -205,7 +225,7 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -231,6 +251,99 @@ public class AtualizaDadosPessoais extends javax.swing.JFrame {
                 new AtualizaDadosPessoais().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        tOpcao.setBounds(
+                cx - 152,
+                cy - 12,
+                150,
+                22
+        );
+
+        jLabel1.setBounds(
+                cx - 152,
+                cy - 52,
+                140,
+                20
+        );
+
+        tCPF.setBounds(
+                cx + 8,
+                cy - 52,
+                140,
+                22
+        );
+
+        tItem.setBounds(
+                cx + 8,
+                cy - 12,
+                140,
+                22
+        );
+
+        ConfirmaAtualizacao.setBounds(
+                cx + 2,
+                cy + 28,
+                150,
+                23
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                75,
+                30
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

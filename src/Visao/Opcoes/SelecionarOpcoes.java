@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes;
+import java.awt.*;
 
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import Visao.Opcoes.Dentistas.OpcoesDentistas;
 import Visao.TelaInicial.TelaInicial;
-import java.awt.Image;
 import javax.swing.*;
 
 /**
@@ -23,11 +23,14 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
 
         initComponents();
 
-        ConfigurarImagem();
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        // Ajusta a tela ao tamanho da janela
         addComponentListener(new java.awt.event.ComponentAdapter() {
-
             @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
                 ajustarTela();
@@ -37,6 +40,7 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             ajustarTela();
         });
+
     }
 
     /**
@@ -52,6 +56,10 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
         BtnDentista = new javax.swing.JButton();
         BtnTelaInicial = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
+
+        Imagem.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Selecionar Opções");
         setMinimumSize(new java.awt.Dimension(801, 528));
@@ -87,50 +95,11 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
         getContentPane().add(BtnTelaInicial);
         BtnTelaInicial.setBounds(0, 460, 60, 30);
 
-
         pack();
         setSize(801, 528);
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void ConfigurarImagem() {
 
-        java.net.URL url = getClass()
-                .getResource("/Imagem/Odontologia Temporaria.png");
-
-        if (url == null) {
-            System.out.println("Imagem não encontrada!");
-            return;
-        }
-
-
-        Image imagem = new ImageIcon(url).getImage();
-
-
-        Imagem = new JLabel() {
-
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-
-                super.paintComponent(g);
-
-                g.drawImage(
-                        imagem,
-                        0,
-                        0,
-                        getWidth(),
-                        getHeight(),
-                        this
-                );
-            }
-        };
-
-
-        getContentPane().add(Imagem);
-        getContentPane().setComponentZOrder(BtnPacientes, 0);
-        getContentPane().setComponentZOrder(BtnDentista, 0);
-        getContentPane().setComponentZOrder(BtnTelaInicial, 0);
-
-    }
     private void BtnTelaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTelaInicialActionPerformed
         abrirTela(new TelaInicial());
     }//GEN-LAST:event_BtnTelaInicialActionPerformed
@@ -150,7 +119,7 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -182,13 +151,36 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
         tela.setVisible(true);
     }
 
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
     private void ajustarTela() {
 
         int largura = getContentPane().getWidth();
         int altura = getContentPane().getHeight();
 
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
 
-        // imagem ocupa toda a tela
         Imagem.setBounds(
                 0,
                 0,
@@ -196,44 +188,39 @@ public class SelecionarOpcoes extends javax.swing.JFrame {
                 altura
         );
 
+        atualizarImagem();
 
-        int larguraBotao = 220;
-        int alturaBotao = 30;
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
 
-
-        int x = (largura - larguraBotao) / 2;
-
-        int y = (altura / 2) - 50;
-
+        int cx = largura / 2;
+        int cy = altura / 2;
 
         BtnPacientes.setBounds(
-                x,
-                y,
-                larguraBotao,
-                alturaBotao
+                cx - 105,
+                cy - 36,
+                210,
+                23
         );
-
 
         BtnDentista.setBounds(
-                x,
-                y + 50,
-                larguraBotao,
-                alturaBotao
+                cx - 105,
+                cy + 14,
+                210,
+                23
         );
 
+        // =====================================
+        // VOLTAR
+        // =====================================
 
         BtnTelaInicial.setBounds(
                 15,
                 altura - 60,
-                45,
-                45
+                60,
+                30
         );
-
-
-        Imagem.repaint();
-        BtnPacientes.repaint();
-        BtnDentista.repaint();
-        BtnTelaInicial.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

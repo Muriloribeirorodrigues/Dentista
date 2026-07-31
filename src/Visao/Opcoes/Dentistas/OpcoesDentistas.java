@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas;
+import java.awt.*;
 
 import Visao.Opcoes.SelecionarOpcoes;
 import Visao.Opcoes.Dentistas.Cadastro.CadastroDentista;
@@ -12,7 +13,6 @@ import Visao.Opcoes.Dentistas.Deletar.DeletarDentista;
 import Visao.Opcoes.Dentistas.Agendamento.Agendamento;
 import Visao.Opcoes.Dentistas.Atualizacao.AtualizarDadosDentista;
 import Visao.Opcoes.Dentistas.Atualizacao.AtualizacaoEnderecoDentista;
-import java.awt.Image;
 import javax.swing.*;
 
 /**
@@ -28,10 +28,14 @@ public class OpcoesDentistas extends javax.swing.JFrame {
 
         initComponents();
 
-        ConfigurarImagem();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        addComponentListener(new java.awt.event.ComponentAdapter() {
+        getContentPane().setComponentZOrder(
+                jLabel1,
+                getContentPane().getComponentCount() - 1
+        );
 
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
                 ajustarTela();
@@ -41,6 +45,7 @@ public class OpcoesDentistas extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             ajustarTela();
         });
+
     }
 
     @SuppressWarnings("unchecked")
@@ -56,6 +61,10 @@ public class OpcoesDentistas extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opções Dentistas");
@@ -142,50 +151,6 @@ public class OpcoesDentistas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConfigurarImagem() {
-
-        java.net.URL url = getClass()
-                .getResource("/Imagem/Odontologia Temporaria.png");
-
-        if (url == null) {
-            System.out.println("Imagem não encontrada!");
-            return;
-        }
-
-
-        Image imagem = new ImageIcon(url).getImage();
-
-
-        jLabel1 = new JLabel() {
-
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-
-                super.paintComponent(g);
-
-                g.drawImage(
-                        imagem,
-                        0,
-                        0,
-                        getWidth(),
-                        getHeight(),
-                        this
-                );
-            }
-        };
-
-
-        getContentPane().add(jLabel1);
-        getContentPane().setComponentZOrder(AgendaDentistas, 0);
-        getContentPane().setComponentZOrder(CadastroDentista, 0);
-        getContentPane().setComponentZOrder(CadastroEnderecoDentista, 0);
-        getContentPane().setComponentZOrder(ConsultasDentistas, 0);
-        getContentPane().setComponentZOrder(DeletarDentistas, 0);
-        getContentPane().setComponentZOrder(VoltarSelecionarOpcoes, 0);
-        getContentPane().setComponentZOrder(jButton1, 0);
-        getContentPane().setComponentZOrder(jButton2, 0);
-    }
-
     private void VoltarSelecionarOpcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarSelecionarOpcoesActionPerformed
     dispose();
     new SelecionarOpcoes().setVisible(true);
@@ -233,7 +198,7 @@ public class OpcoesDentistas extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -267,13 +232,36 @@ public class OpcoesDentistas extends javax.swing.JFrame {
         tela.setVisible(true);
     }
 
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                jLabel1.getWidth(),
+                jLabel1.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        jLabel1.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
     private void ajustarTela() {
 
         int largura = getContentPane().getWidth();
         int altura = getContentPane().getHeight();
 
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
 
-        // imagem ocupa toda a tela
         jLabel1.setBounds(
                 0,
                 0,
@@ -281,72 +269,74 @@ public class OpcoesDentistas extends javax.swing.JFrame {
                 altura
         );
 
+        atualizarImagem();
 
-        int larguraBotao = 220;
-        int alturaBotao = 30;
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
 
-
-        int x = (largura - larguraBotao) / 2;
-
-        int y = (altura / 2) - 50;
-
-        AgendaDentistas.setBounds(
-                x,
-                y+160,
-                larguraBotao,
-                alturaBotao
-        );
+        int cx = largura / 2;
+        int cy = altura / 2;
 
         CadastroDentista.setBounds(
-                x,
-                y,
-                larguraBotao,
-                alturaBotao
+                cx - 100,
+                cy - 102,
+                200,
+                23
         );
 
         CadastroEnderecoDentista.setBounds(
-                x,
-                y+40,
-                larguraBotao,
-                alturaBotao
+                cx - 100,
+                cy - 42,
+                200,
+                23
         );
 
         ConsultasDentistas.setBounds(
-                x,
-                y+200,
-                larguraBotao,
-                alturaBotao
+                cx - 100,
+                cy + 18,
+                200,
+                23
+        );
+
+        AgendaDentistas.setBounds(
+                cx - 100,
+                cy + 48,
+                200,
+                23
         );
 
         DeletarDentistas.setBounds(
-                x,
-                y+240,
-                larguraBotao,
-                alturaBotao
+                cx - 100,
+                cy + 78,
+                200,
+                23
         );
+
+        jButton1.setBounds(
+                cx - 100,
+                cy - 72,
+                200,
+                23
+        );
+
+        jButton2.setBounds(
+                cx - 100,
+                cy - 12,
+                200,
+                23
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
 
         VoltarSelecionarOpcoes.setBounds(
                 15,
                 altura - 60,
-                45,
-                45
+                54,
+                30
         );
-
-        jButton1.setBounds(
-                x,
-                y+80,
-                larguraBotao,
-                alturaBotao
-        );
-
-        jButton2.setBounds(
-                x,
-                y+120,
-                larguraBotao,
-                alturaBotao
-        );
-
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

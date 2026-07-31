@@ -125,18 +125,18 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
     }
 
     private void RetornaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetornaActionPerformed
-        dispose();
-        new SelecionarOpcoes().setVisible(true);
+    dispose();
+    new SelecionarOpcoes().setVisible(true);
     }//GEN-LAST:event_RetornaActionPerformed
 
     private void RealizarAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarAgendamentoActionPerformed
-        dispose();
-        new NovoAgendamento().setVisible(true);
+    dispose();
+    new NovoAgendamento().setVisible(true);
     }//GEN-LAST:event_RealizarAgendamentoActionPerformed
 
     private void ConsultaAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaAgendamentoActionPerformed
-        dispose();
-        new ConsultaAgendamentos().setVisible(true);
+    dispose();
+    new ConsultaAgendamentos().setVisible(true);
     }//GEN-LAST:event_ConsultaAgendamentoActionPerformed
 
     /**
@@ -146,7 +146,7 @@ public class AgendamentoConcluido extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

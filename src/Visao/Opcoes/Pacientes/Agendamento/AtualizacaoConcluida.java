@@ -131,23 +131,23 @@ public class AtualizacaoConcluida extends javax.swing.JFrame {
     }
 
     private void NovoAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NovoAgendamentoActionPerformed
-        dispose();
-        new NovoAgendamento().setVisible(true);
+    dispose();
+    new NovoAgendamento().setVisible(true);
     }//GEN-LAST:event_NovoAgendamentoActionPerformed
 
     private void NovaAtualizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NovaAtualizacaoActionPerformed
-        dispose();
-        new AtualizarAgendamento().setVisible(true);
+    dispose();
+    new AtualizarAgendamento().setVisible(true);
     }//GEN-LAST:event_NovaAtualizacaoActionPerformed
 
     private void ConsultarAgendamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarAgendamentosActionPerformed
-        dispose();
-        new ConsultaAgendamentos().setVisible(true);
+    dispose();
+    new ConsultaAgendamentos().setVisible(true);
     }//GEN-LAST:event_ConsultarAgendamentosActionPerformed
 
     private void RetornarAoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetornarAoMenuActionPerformed
-        dispose();
-        new SelecionarOpcoes().setVisible(true);
+    dispose();
+    new SelecionarOpcoes().setVisible(true);
     }//GEN-LAST:event_RetornarAoMenuActionPerformed
 
     /**
@@ -157,7 +157,7 @@ public class AtualizacaoConcluida extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

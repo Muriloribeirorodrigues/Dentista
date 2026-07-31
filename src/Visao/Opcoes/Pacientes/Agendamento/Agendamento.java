@@ -5,8 +5,8 @@
 package Visao.Opcoes.Pacientes.Agendamento;
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import Visao.Opcoes.Pacientes.Agendamento.NovoAgendamento;
-import java.awt.Image;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -19,15 +19,21 @@ public class Agendamento extends javax.swing.JFrame {
      */
     public Agendamento() {
         initComponents();
-        ConfigurarImagem();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        addComponentListener(new java.awt.event.ComponentAdapter(){
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
                 ajustarTela();
             }
         });
+
         SwingUtilities.invokeLater(() -> {
             ajustarTela();
         });
@@ -48,6 +54,10 @@ public class Agendamento extends javax.swing.JFrame {
         ConsultaAgendamento = new javax.swing.JButton();
         AtualizarAgendamento = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
+
+        Imagem.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agendamentos");
@@ -107,46 +117,25 @@ public class Agendamento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConfigurarImagem() {
+    private void atualizarImagem() {
 
-        java.net.URL url = getClass()
-                .getResource("/Imagem/Odontologia Temporaria.png");
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
 
-        if (url == null) {
-            System.out.println("Imagem não encontrada!");
-            return;
-        }
+        Image imagem = iconeOriginal.getImage();
 
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
 
-        Image imagem = new ImageIcon(url).getImage();
-
-
-        Imagem = new JLabel() {
-
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-
-                super.paintComponent(g);
-
-                g.drawImage(
-                        imagem,
-                        0,
-                        0,
-                        getWidth(),
-                        getHeight(),
-                        this
-                );
-            }
-        };
-
-
-        getContentPane().add(Imagem);
-        getContentPane().setComponentZOrder(AtualizarAgendamento, 0);
-        getContentPane().setComponentZOrder(ConsultaAgendamento, 0);
-        getContentPane().setComponentZOrder(DeletarAgendamento, 0);
-        getContentPane().setComponentZOrder(NovoAgendamento, 0);
-        getContentPane().setComponentZOrder(Voltar, 0);
-
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
     }
 
     private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
@@ -214,8 +203,10 @@ public class Agendamento extends javax.swing.JFrame {
         int largura = getContentPane().getWidth();
         int altura = getContentPane().getHeight();
 
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
 
-        // imagem ocupa toda a tela
         Imagem.setBounds(
                 0,
                 0,
@@ -223,35 +214,18 @@ public class Agendamento extends javax.swing.JFrame {
                 altura
         );
 
+        atualizarImagem();
 
-        int larguraBotao = 220;
+        // =====================================
+        // BOTÕES CENTRAIS
+        // =====================================
+
+        int larguraBotao = 250;
         int alturaBotao = 30;
-
+        int espacamento = 10;
 
         int x = (largura - larguraBotao) / 2;
-
-        int y = (altura / 2) - 50;
-
-        AtualizarAgendamento.setBounds(
-                x,
-                y+80,
-                larguraBotao,
-                alturaBotao
-        );
-
-        ConsultaAgendamento.setBounds(
-                x,
-                y+40,
-                larguraBotao,
-                alturaBotao
-        );
-
-        DeletarAgendamento.setBounds(
-                x,
-                y+120,
-                larguraBotao,
-                alturaBotao
-        );
+        int y = (altura / 2) - 60;
 
         NovoAgendamento.setBounds(
                 x,
@@ -260,6 +234,30 @@ public class Agendamento extends javax.swing.JFrame {
                 alturaBotao
         );
 
+        ConsultaAgendamento.setBounds(
+                x,
+                y + (alturaBotao + espacamento),
+                larguraBotao,
+                alturaBotao
+        );
+
+        AtualizarAgendamento.setBounds(
+                x,
+                y + (alturaBotao + espacamento) * 2,
+                larguraBotao,
+                alturaBotao
+        );
+
+        DeletarAgendamento.setBounds(
+                x,
+                y + (alturaBotao + espacamento) * 3,
+                larguraBotao,
+                alturaBotao
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
 
         Voltar.setBounds(
                 15,
@@ -267,9 +265,6 @@ public class Agendamento extends javax.swing.JFrame {
                 45,
                 45
         );
-
-
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

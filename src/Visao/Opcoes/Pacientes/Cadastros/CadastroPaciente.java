@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Pacientes.Cadastros;
+import java.awt.*;
+import javax.swing.*;
 import Modelo.DadosPessoaisM;
 import Controle.DadosPessoaisC;
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import java.awt.event.KeyEvent;
+import java.awt.image.ImageObserver;
 /**
  *
  * @author guto4
@@ -20,6 +23,24 @@ public class CadastroPaciente extends javax.swing.JFrame {
      */
     public CadastroPaciente() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -154,7 +175,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
     dc.CadastroGeralClientes(dp);
     new CadastroConcluidoPaciente().setVisible(true);
     dispose();
-    
+
     }//GEN-LAST:event_CadastroActionPerformed
 
     private void jcpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcpfKeyTyped
@@ -171,7 +192,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
     }
     if (countCPF == 8)
     {
-       jcpf.setText(jcpf.getText() + "."); 
+       jcpf.setText(jcpf.getText() + ".");
        countCPF = countCPF+1;
     }
     if (countCPF == 12){
@@ -179,21 +200,21 @@ public class CadastroPaciente extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
         }
         else if(countCPF == 1){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 2){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 3){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
-        
+
     }
     }//GEN-LAST:event_jcpfKeyTyped
 
@@ -215,18 +236,18 @@ public class CadastroPaciente extends javax.swing.JFrame {
        countData = countData+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countData > 0){
             countData = countData-1;
         }
         else if(countData == 1){
-        countData = countData-2;    
+        countData = countData-2;
         }
         else if(countData == 3){
-        countData = countData-2;    
+        countData = countData-2;
         }
-        
+
     }
     }//GEN-LAST:event_jDataNascKeyTyped
 
@@ -244,7 +265,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
     }
     if (countContato == 4)
     {
-       jContato.setText(jContato.getText() + ")"); 
+       jContato.setText(jContato.getText() + ")");
        countContato = countContato+1;
     }
     if (countContato == 10){
@@ -252,21 +273,21 @@ public class CadastroPaciente extends javax.swing.JFrame {
         countContato = countContato+1;
     }
     }
-  
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countContato > 0){
             countContato = countContato-1;
         }
         else if(countContato == 1){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
         else if(countContato == 4){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
         else if(countContato == 10){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
-        
+
     }
     }//GEN-LAST:event_jContatoKeyTyped
 
@@ -277,7 +298,7 @@ public class CadastroPaciente extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -303,6 +324,141 @@ public class CadastroPaciente extends javax.swing.JFrame {
                 new CadastroPaciente().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagemBase = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagemBase.getScaledInstance(
+                imagem.getWidth(),
+                imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        Tnome.setBounds(
+                cx - 175,
+                cy - 96,
+                110,
+                20
+        );
+
+        Tcpf.setBounds(
+                cx - 175,
+                cy - 56,
+                100,
+                20
+        );
+
+        TDataNasc.setBounds(
+                cx - 175,
+                cy - 26,
+                110,
+                20
+        );
+
+        TContato.setBounds(
+                cx - 175,
+                cy + 4,
+                110,
+                20
+        );
+
+        TSexo.setBounds(
+                cx - 175,
+                cy + 34,
+                120,
+                20
+        );
+
+        jnome.setBounds(
+                cx - 45,
+                cy - 96,
+                220,
+                22
+        );
+
+        jcpf.setBounds(
+                cx - 45,
+                cy - 58,
+                220,
+                22
+        );
+
+        jDataNasc.setBounds(
+                cx - 45,
+                cy - 26,
+                220,
+                22
+        );
+
+        jContato.setBounds(
+                cx - 45,
+                cy + 4,
+                220,
+                22
+        );
+
+        jSexo.setBounds(
+                cx - 45,
+                cy + 34,
+                220,
+                22
+        );
+
+        Cadastro.setBounds(
+                cx - 45,
+                cy + 74,
+                220,
+                23
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                54,
+                30
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

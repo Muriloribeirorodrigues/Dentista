@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Consulta;
+import java.awt.*;
+import javax.swing.*;
 import java.sql.ResultSet;
 import Controle.EnderecoC;
 import java.awt.event.KeyEvent;
@@ -21,6 +23,24 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
      */
     public ConsultaDentistaEndereco() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
         campotabela.addColumn ("NOME:");
         campotabela.addColumn ("ESTADO:");
         campotabela.addColumn ("CIDADE:");
@@ -49,7 +69,7 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
         tCPF = new javax.swing.JTextField();
         Imagem = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 533));
         setMinimumSize(new java.awt.Dimension(800, 533));
         getContentPane().setLayout(null);
@@ -129,14 +149,14 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
                     if (i==7){
                         jTable1.setValueAt(resposta.getInt(i),linha,i-1);
                     }
-                    else 
+                    else
                         jTable1.setValueAt(resposta.getString(i),linha,i-1);
                 }
                 linha++;
             }
         } catch(Exception erro){
             erro.printStackTrace();
-            
+
         }
     }//GEN-LAST:event_ConsultaGeralActionPerformed
 
@@ -153,15 +173,15 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
                     if (i==7){
                         jTable1.setValueAt(resposta.getInt(i),linha,i-1);
                     }
-                    else 
+                    else
                         jTable1.setValueAt(resposta.getString(i),linha,i-1);
                 }
                 linha++;
             }
         } catch(Exception erro){
             erro.printStackTrace();
-            
-        }  
+
+        }
     }//GEN-LAST:event_ConsultaPorCPFActionPerformed
 
     private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
@@ -183,7 +203,7 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
     }
     if (countCPF == 8)
     {
-       tCPF.setText(tCPF.getText() + "."); 
+       tCPF.setText(tCPF.getText() + ".");
        countCPF = countCPF+1;
     }
     if (countCPF == 12){
@@ -191,21 +211,21 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
         }
         else if(countCPF == 1){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 2){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 3){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
-        
+
     }
     }//GEN-LAST:event_tCPFKeyTyped
 
@@ -216,7 +236,7 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -242,6 +262,99 @@ public class ConsultaDentistaEndereco extends javax.swing.JFrame {
                 new ConsultaDentistaEndereco().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        jScrollPane1.setBounds(
+                cx - 400,
+                cy - 110,
+                800,
+                330
+        );
+
+        ConsultaPorCPF.setBounds(
+                cx + 250,
+                cy - 170,
+                130,
+                23
+        );
+
+        ConsultaGeral.setBounds(
+                cx + 110,
+                cy - 170,
+                120,
+                23
+        );
+
+        jLabel1.setBounds(
+                cx + 100,
+                cy - 210,
+                140,
+                20
+        );
+
+        tCPF.setBounds(
+                cx + 250,
+                cy - 220,
+                130,
+                30
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                72,
+                30
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Consulta;
+import java.awt.*;
+import javax.swing.*;
 import java.sql.ResultSet;
 import Controle.DadosPessoaisC;
 import java.awt.event.KeyEvent;
@@ -19,6 +21,24 @@ public class ConsultaDentistaCadastrado extends javax.swing.JFrame {
 
     public ConsultaDentistaCadastrado() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
         campotabela.addColumn ("NOME:");
         campotabela.addColumn ("CPF:");
         campotabela.addColumn ("DATA_NASC:");
@@ -132,14 +152,14 @@ public class ConsultaDentistaCadastrado extends javax.swing.JFrame {
                     if (i<=4){
                         jTable1.setValueAt(resposta.getString(i),linha,i-1);
                     }
-                    else 
+                    else
                         jTable1.setValueAt(resposta.getArray(i),linha,i-1);
                 }
                 linha++;
             }
         } catch(Exception erro){
             erro.printStackTrace();
-            
+
         }        // TODO add your handling code here:
     }//GEN-LAST:event_ConsultaPorCPFActionPerformed
 
@@ -155,15 +175,15 @@ public class ConsultaDentistaCadastrado extends javax.swing.JFrame {
                     if (i<=4){
                         jTable1.setValueAt(resposta.getString(i),linha,i-1);
                     }
-                    else 
+                    else
                         jTable1.setValueAt(resposta.getArray(i),linha,i-1);
                 }
                 linha++;
             }
         } catch(Exception erro){
             erro.printStackTrace();
-            
-        }   
+
+        }
     }//GEN-LAST:event_ConsultaGeralActionPerformed
 
     private void jCPFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCPFKeyTyped
@@ -180,7 +200,7 @@ public class ConsultaDentistaCadastrado extends javax.swing.JFrame {
     }
     if (countCPF == 8)
     {
-       jCPF.setText(jCPF.getText() + "."); 
+       jCPF.setText(jCPF.getText() + ".");
        countCPF = countCPF+1;
     }
     if (countCPF == 12){
@@ -188,21 +208,21 @@ public class ConsultaDentistaCadastrado extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
         }
         else if(countCPF == 1){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 2){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 3){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
-        
+
     }
     }//GEN-LAST:event_jCPFKeyTyped
 
@@ -213,7 +233,7 @@ public class ConsultaDentistaCadastrado extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -239,6 +259,99 @@ public class ConsultaDentistaCadastrado extends javax.swing.JFrame {
                 new ConsultaDentistaCadastrado().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        jScrollPane1.setBounds(
+                cx - 400,
+                cy - 115,
+                800,
+                330
+        );
+
+        jLabel1.setBounds(
+                cx + 120,
+                cy - 215,
+                140,
+                20
+        );
+
+        jCPF.setBounds(
+                cx + 260,
+                cy - 215,
+                130,
+                22
+        );
+
+        ConsultaGeral.setBounds(
+                cx + 120,
+                cy - 175,
+                130,
+                23
+        );
+
+        ConsultaPorCPF.setBounds(
+                cx + 260,
+                cy - 175,
+                130,
+                23
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                90,
+                30
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

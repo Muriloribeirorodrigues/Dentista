@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Atualizacao;
+import java.awt.*;
+import javax.swing.*;
 import Visao.Opcoes.SelecionarOpcoes;
 import Visao.Opcoes.Dentistas.Consulta.ConsultaDentistaCadastrado;
 import Visao.Opcoes.Dentistas.Cadastro.CadastroDentista;
@@ -18,6 +20,24 @@ public class AtualizacaoDadosConcluida extends javax.swing.JFrame {
      */
     public AtualizacaoDadosConcluida() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -116,7 +136,7 @@ public class AtualizacaoDadosConcluida extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -142,6 +162,88 @@ public class AtualizacaoDadosConcluida extends javax.swing.JFrame {
                 new AtualizacaoDadosConcluida().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontoloigia Temporaria2.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        jLabel1.setBounds(
+                cx - 90,
+                cy - 76,
+                200,
+                20
+        );
+
+        NovaAtualizacao.setBounds(
+                cx - 110,
+                cy - 36,
+                220,
+                23
+        );
+
+        CadastrarDentista.setBounds(
+                cx - 110,
+                cy - 6,
+                220,
+                23
+        );
+
+        ConsultarDentistas.setBounds(
+                cx - 110,
+                cy + 24,
+                220,
+                23
+        );
+
+        RetornarAoMenu.setBounds(
+                cx - 110,
+                cy + 54,
+                220,
+                23
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

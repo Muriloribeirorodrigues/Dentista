@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Pacientes;
+import java.awt.*;
 
 import Visao.Opcoes.Pacientes.Cadastros.CadastroPaciente;
 import Visao.Opcoes.Pacientes.Cadastros.CadastroPacienteEndereco;
@@ -12,7 +13,6 @@ import Visao.Opcoes.Pacientes.Deletar.DeletarPaciente;
 import Visao.Opcoes.Pacientes.Agendamento.Agendamento;
 import Visao.Opcoes.Pacientes.Atualizacao.AtualizaDadosPessoais;
 import Visao.Opcoes.Pacientes.Atualizacao.AtualizaEndereco;
-import java.awt.Image;
 import javax.swing.*;
 
 /**
@@ -26,11 +26,15 @@ public class OpcoesPacientes extends javax.swing.JFrame {
      */
     public OpcoesPacientes() {
         initComponents();
-        ConfigurarImagem();
+
+        getContentPane().setComponentZOrder(
+                jLabel1,
+                getContentPane().getComponentCount() - 1
+        );
+
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        // Ajusta a tela ao tamanho da janela
         addComponentListener(new java.awt.event.ComponentAdapter() {
-
             @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
                 ajustarTela();
@@ -40,6 +44,7 @@ public class OpcoesPacientes extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             ajustarTela();
         });
+
     }
 
     /**
@@ -60,6 +65,10 @@ public class OpcoesPacientes extends javax.swing.JFrame {
         AtualizarDadosPaciente = new javax.swing.JButton();
         AtualizarEndereco = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opções Pacientes");
@@ -142,55 +151,10 @@ public class OpcoesPacientes extends javax.swing.JFrame {
         getContentPane().add(AtualizarEndereco);
         AtualizarEndereco.setBounds(310, 270, 200, 23);
 
-
         pack();
         setSize(801, 528);
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ConfigurarImagem() {
-
-        java.net.URL url = getClass()
-                .getResource("/Imagem/Odontologia Temporaria.png");
-
-        if (url == null) {
-            System.out.println("Imagem não encontrada!");
-            return;
-        }
-
-
-        Image imagem = new ImageIcon(url).getImage();
-
-
-        jLabel1 = new JLabel() {
-
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-
-                super.paintComponent(g);
-
-                g.drawImage(
-                        imagem,
-                        0,
-                        0,
-                        getWidth(),
-                        getHeight(),
-                        this
-                );
-            }
-        };
-
-
-        getContentPane().add(jLabel1);
-        getContentPane().setComponentZOrder(AgendarPaciente, 0);
-        getContentPane().setComponentZOrder(Cadastro_Paciente, 0);
-        getContentPane().setComponentZOrder(CadastroEndereco, 0);
-        getContentPane().setComponentZOrder(ConsultaPaciente, 0);
-        getContentPane().setComponentZOrder(DeletarPaciente, 0);
-        getContentPane().setComponentZOrder(VoltarAsOpcoes, 0);
-        getContentPane().setComponentZOrder(AtualizarDadosPaciente, 0);
-        getContentPane().setComponentZOrder(AtualizarEndereco, 0);
-    }
 
     private void ConsultaPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaPacienteActionPerformed
     dispose();
@@ -239,7 +203,7 @@ public class OpcoesPacientes extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -267,13 +231,36 @@ public class OpcoesPacientes extends javax.swing.JFrame {
         });
     }
 
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                jLabel1.getWidth(),
+                jLabel1.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        jLabel1.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
     private void ajustarTela() {
 
         int largura = getContentPane().getWidth();
         int altura = getContentPane().getHeight();
 
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
 
-        // imagem ocupa toda a tela
         jLabel1.setBounds(
                 0,
                 0,
@@ -281,72 +268,74 @@ public class OpcoesPacientes extends javax.swing.JFrame {
                 altura
         );
 
+        atualizarImagem();
 
-        int larguraBotao = 220;
-        int alturaBotao = 30;
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
 
-
-        int x = (largura - larguraBotao) / 2;
-
-        int y = (altura / 2) - 50;
-
-        AgendarPaciente.setBounds(
-                x,
-                y+160,
-                larguraBotao,
-                alturaBotao
-        );
+        int cx = largura / 2;
+        int cy = altura / 2;
 
         Cadastro_Paciente.setBounds(
-                x,
-                y,
-                larguraBotao,
-                alturaBotao
-        );
-
-        CadastroEndereco.setBounds(
-                x,
-                y+40,
-                larguraBotao,
-                alturaBotao
+                cx - 110,
+                cy - 102,
+                220,
+                23
         );
 
         ConsultaPaciente.setBounds(
-                x,
-                y+200,
-                larguraBotao,
-                alturaBotao
+                cx - 110,
+                cy + 18,
+                220,
+                23
+        );
+
+        AgendarPaciente.setBounds(
+                cx - 110,
+                cy + 48,
+                220,
+                23
         );
 
         DeletarPaciente.setBounds(
-                x,
-                y+240,
-                larguraBotao,
-                alturaBotao
+                cx - 110,
+                cy + 78,
+                220,
+                23
         );
+
+        CadastroEndereco.setBounds(
+                cx - 110,
+                cy - 42,
+                220,
+                23
+        );
+
+        AtualizarDadosPaciente.setBounds(
+                cx - 110,
+                cy - 72,
+                220,
+                23
+        );
+
+        AtualizarEndereco.setBounds(
+                cx - 110,
+                cy - 12,
+                200,
+                23
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
 
         VoltarAsOpcoes.setBounds(
                 15,
                 altura - 60,
-                45,
-                45
+                70,
+                30
         );
-
-        AtualizarDadosPaciente.setBounds(
-                x,
-                y+80,
-                larguraBotao,
-                alturaBotao
-        );
-
-        AtualizarEndereco.setBounds(
-                x,
-                y+120,
-                larguraBotao,
-                alturaBotao
-        );
-
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

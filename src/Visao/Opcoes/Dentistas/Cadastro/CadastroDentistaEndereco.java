@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Cadastro;
+import java.awt.*;
+import javax.swing.*;
 import Modelo.EnderecoM;
 import Controle.EnderecoC;
 import Visao.Opcoes.Dentistas.OpcoesDentistas;
@@ -20,6 +22,24 @@ public class CadastroDentistaEndereco extends javax.swing.JFrame {
      */
     public CadastroDentistaEndereco() {
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -142,11 +162,11 @@ public class CadastroDentistaEndereco extends javax.swing.JFrame {
     String Bairro = tBairro.getText();
     String Rua = tRua.getText();
     int Numero = Integer.parseInt(tNumero.getText());
-    
+
     EnderecoM end = new EnderecoM(CPF,Estado,Cidade,Cep,Bairro,Rua,Numero);
     EnderecoC endc = new EnderecoC();
     endc.CadastroEnderecoDentistas(end);
-    
+
     dispose();
     new CadastroEnderecoConcluido().setVisible(true);
     }//GEN-LAST:event_ConcluirCadastroActionPerformed
@@ -178,21 +198,21 @@ public class CadastroDentistaEndereco extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
         }
         else if(countCPF == 1){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 2){
-        countCPF = countCPF-2;    
+        countCPF = countCPF-2;
         }
         else if(countCPF == 3){
         countCPF = countCPF-2;
         }
-        
+
     }
     }//GEN-LAST:event_tCPFKeyTyped
 
@@ -210,22 +230,22 @@ public class CadastroDentistaEndereco extends javax.swing.JFrame {
     }
     if (countCEP == 7)
     {
-       tCep.setText(tCep.getText() + "-"); 
+       tCep.setText(tCep.getText() + "-");
        countCEP = countCEP+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCEP > 0){
             countCEP = countCEP-1;
         }
         else if(countCEP == 1){
-        countCEP = countCEP-2;    
+        countCEP = countCEP-2;
         }
         else if(countCPF == 3){
-        countCEP = countCEP-2;    
+        countCEP = countCEP-2;
         }
-        
+
     }
     }//GEN-LAST:event_tCepKeyTyped
 
@@ -236,7 +256,7 @@ public class CadastroDentistaEndereco extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -262,6 +282,169 @@ public class CadastroDentistaEndereco extends javax.swing.JFrame {
                 new CadastroDentistaEndereco().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        tCPF.setBounds(
+                cx - 28,
+                cy - 122,
+                160,
+                22
+        );
+
+        tEstado.setBounds(
+                cx - 28,
+                cy - 92,
+                160,
+                22
+        );
+
+        tCidade.setBounds(
+                cx - 28,
+                cy - 62,
+                160,
+                22
+        );
+
+        tCep.setBounds(
+                cx - 28,
+                cy - 32,
+                160,
+                22
+        );
+
+        tBairro.setBounds(
+                cx - 28,
+                cy - 2,
+                160,
+                22
+        );
+
+        tRua.setBounds(
+                cx - 28,
+                cy + 28,
+                160,
+                22
+        );
+
+        tNumero.setBounds(
+                cx - 28,
+                cy + 58,
+                160,
+                22
+        );
+
+        jLabel1.setBounds(
+                cx - 132,
+                cy - 122,
+                100,
+                20
+        );
+
+        jLabel2.setBounds(
+                cx - 128,
+                cy - 92,
+                100,
+                20
+        );
+
+        jLabel3.setBounds(
+                cx - 128,
+                cy - 62,
+                100,
+                20
+        );
+
+        jLabel4.setBounds(
+                cx - 128,
+                cy - 32,
+                100,
+                20
+        );
+
+        jLabel5.setBounds(
+                cx - 128,
+                cy - 2,
+                100,
+                20
+        );
+
+        jLabel6.setBounds(
+                cx - 128,
+                cy + 28,
+                100,
+                20
+        );
+
+        jLabel7.setBounds(
+                cx - 128,
+                cy + 58,
+                100,
+                20
+        );
+
+        ConcluirCadastro.setBounds(
+                cx - 28,
+                cy + 98,
+                160,
+                23
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                80,
+                30
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

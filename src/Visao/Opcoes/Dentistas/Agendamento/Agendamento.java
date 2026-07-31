@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Agendamento;
+import java.awt.*;
 import Visao.Opcoes.Dentistas.OpcoesDentistas;
-import java.awt.Image;
 import javax.swing.*;
 
 /**
@@ -18,18 +18,25 @@ public class Agendamento extends javax.swing.JFrame {
      */
     public Agendamento() {
         initComponents();
-        ConfigurarImagem();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        addComponentListener(new java.awt.event.ComponentAdapter(){
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
                 ajustarTela();
             }
         });
+
         SwingUtilities.invokeLater(() -> {
             ajustarTela();
         });
+
     }
 
     /**
@@ -45,6 +52,10 @@ public class Agendamento extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         Imagem = new javax.swing.JLabel();
+
+        Imagem.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/Imagem/Odontologia Temporaria.png")
+        ));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agendamento Dos Dentistas");
@@ -81,50 +92,10 @@ public class Agendamento extends javax.swing.JFrame {
         getContentPane().add(jButton3);
         jButton3.setBounds(0, 460, 75, 40);
 
-
         pack();
         setSize(801, 528);
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ConfigurarImagem() {
-
-        java.net.URL url = getClass()
-                .getResource("/Imagem/Odontologia Temporaria.png");
-
-        if (url == null) {
-            System.out.println("Imagem não encontrada!");
-            return;
-        }
-
-
-        Image imagem = new ImageIcon(url).getImage();
-
-
-        Imagem = new JLabel() {
-
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-
-                super.paintComponent(g);
-
-                g.drawImage(
-                        imagem,
-                        0,
-                        0,
-                        getWidth(),
-                        getHeight(),
-                        this
-                );
-            }
-        };
-
-
-        getContentPane().add(Imagem);
-        getContentPane().setComponentZOrder(jButton1, 0);
-        getContentPane().setComponentZOrder(jButton2, 0);
-        getContentPane().setComponentZOrder(jButton3, 0);
-    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     dispose();
@@ -148,7 +119,7 @@ public class Agendamento extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -176,13 +147,36 @@ public class Agendamento extends javax.swing.JFrame {
         });
     }
 
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
     private void ajustarTela() {
 
         int largura = getContentPane().getWidth();
         int altura = getContentPane().getHeight();
 
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
 
-        // imagem ocupa toda a tela
         Imagem.setBounds(
                 0,
                 0,
@@ -190,44 +184,39 @@ public class Agendamento extends javax.swing.JFrame {
                 altura
         );
 
+        atualizarImagem();
 
-        int larguraBotao = 220;
-        int alturaBotao = 30;
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
 
-
-        int x = (largura - larguraBotao) / 2;
-
-        int y = (altura / 2) - 50;
-
+        int cx = largura / 2;
+        int cy = altura / 2;
 
         jButton1.setBounds(
-                x,
-                y,
-                larguraBotao,
-                alturaBotao
+                cx - 90,
+                cy - 36,
+                180,
+                23
         );
-
 
         jButton2.setBounds(
-                x,
-                y + 50,
-                larguraBotao,
-                alturaBotao
+                cx - 90,
+                cy + 14,
+                180,
+                23
         );
 
+        // =====================================
+        // VOLTAR
+        // =====================================
 
         jButton3.setBounds(
                 15,
                 altura - 60,
-                45,
-                45
+                75,
+                40
         );
-
-
-        Imagem.repaint();
-        jButton1.repaint();
-        jButton2.repaint();
-        jButton3.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Visao.Opcoes.Dentistas.Cadastro;
+import java.awt.*;
+import javax.swing.*;
 import Visao.Opcoes.Dentistas.OpcoesDentistas;
 import Modelo.DadosPessoaisM;
 import Controle.DadosPessoaisC;
@@ -15,13 +17,31 @@ public class CadastroDentista extends javax.swing.JFrame {
     int countContato = 0;
     int countData = 0;
     ResultSet resposta=null;
-    
+
     /**
      * Creates new form CadastroDentista
      */
     public CadastroDentista() {
-        
+
         initComponents();
+
+        getContentPane().setComponentZOrder(
+                Imagem,
+                getContentPane().getComponentCount() - 1
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Ajusta a tela ao tamanho da janela
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                ajustarTela();
+            }
+        });
+
+        SwingUtilities.invokeLater(() -> {
+            ajustarTela();
+        });
     }
 
     /**
@@ -148,9 +168,6 @@ public class CadastroDentista extends javax.swing.JFrame {
         dc.CadastroGeralDentistas(dm);
     new CadastroDentistaConcluido().setVisible(true);
     dispose();
-        
-        
-
 
     }//GEN-LAST:event_ConcluirCadastroActionPerformed
 
@@ -168,7 +185,7 @@ public class CadastroDentista extends javax.swing.JFrame {
     }
     if (countCPF == 8)
     {
-       tCPF.setText(tCPF.getText() + "."); 
+       tCPF.setText(tCPF.getText() + ".");
        countCPF = countCPF+1;
     }
     if (countCPF == 12){
@@ -176,7 +193,7 @@ public class CadastroDentista extends javax.swing.JFrame {
         countCPF = countCPF+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countCPF > 0){
             countCPF = countCPF-1;
@@ -193,13 +210,12 @@ public class CadastroDentista extends javax.swing.JFrame {
         {
         countCPF = countCPF-2;
         }
-        
+
     }
     }//GEN-LAST:event_tCPFKeyTyped
 
     private void tDataNascKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tDataNascKeyTyped
 
-    
     if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
             |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
         if(tDataNasc.getText().isEmpty()){
@@ -217,24 +233,23 @@ public class CadastroDentista extends javax.swing.JFrame {
        countData = countData+1;
     }
     }
-    
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countData > 0){
             countData = countData-1;
         }
         else if(countData == 1){
-        countData = countData-2;    
+        countData = countData-2;
         }
         else if(countData == 3){
-        countData = countData-2;    
+        countData = countData-2;
         }
-        
+
     }
     }//GEN-LAST:event_tDataNascKeyTyped
 
     private void tContatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tContatoKeyTyped
 
-    
     if(evt.getKeyChar() == '0' |evt.getKeyChar() == '1' |evt.getKeyChar() == '2'|evt.getKeyChar() == '3'
             |evt.getKeyChar() == '4'|evt.getKeyChar() == '5'|evt.getKeyChar() == '6'|evt.getKeyChar() == '7'|evt.getKeyChar() == '8'|evt.getKeyChar() == '9'){
         if(tContato.getText().isEmpty()){
@@ -248,7 +263,7 @@ public class CadastroDentista extends javax.swing.JFrame {
     }
     if (countContato == 4)
     {
-       tContato.setText(tContato.getText() + ")"); 
+       tContato.setText(tContato.getText() + ")");
        countContato = countContato+1;
     }
     if (countContato == 10){
@@ -256,21 +271,21 @@ public class CadastroDentista extends javax.swing.JFrame {
         countContato = countContato+1;
     }
     }
-  
+
     if (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE){
         if (countContato > 0){
             countContato = countContato-1;
         }
         else if(countContato == 1){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
         else if(countContato == 4){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
         else if(countContato == 9){
-        countContato = countContato-2;    
+        countContato = countContato-2;
         }
-        
+
     }
     }//GEN-LAST:event_tContatoKeyTyped
 
@@ -285,7 +300,7 @@ public class CadastroDentista extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -311,6 +326,141 @@ public class CadastroDentista extends javax.swing.JFrame {
                 new CadastroDentista().setVisible(true);
             }
         });
+    }
+
+        private void atualizarImagem() {
+
+        ImageIcon iconeOriginal = new ImageIcon(
+                getClass().getResource(
+                        "/Imagem/Odontologia Temporaria.png"
+                )
+        );
+
+        Image imagem = iconeOriginal.getImage();
+
+        Image imagemRedimensionada = imagem.getScaledInstance(
+                Imagem.getWidth(),
+                Imagem.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+
+        Imagem.setIcon(
+                new ImageIcon(imagemRedimensionada)
+        );
+    }
+
+    private void ajustarTela() {
+
+        int largura = getContentPane().getWidth();
+        int altura = getContentPane().getHeight();
+
+        // =====================================
+        // IMAGEM DE FUNDO
+        // =====================================
+
+        Imagem.setBounds(
+                0,
+                0,
+                largura,
+                altura
+        );
+
+        atualizarImagem();
+
+        // =====================================
+        // COMPONENTES (mantêm a posição relativa do layout original)
+        // =====================================
+
+        int cx = largura / 2;
+        int cy = altura / 2;
+
+        tNome.setBounds(
+                cx - 30,
+                cy - 97,
+                190,
+                24
+        );
+
+        tCPF.setBounds(
+                cx - 30,
+                cy - 67,
+                190,
+                24
+        );
+
+        tDataNasc.setBounds(
+                cx - 30,
+                cy - 37,
+                190,
+                24
+        );
+
+        tContato.setBounds(
+                cx - 30,
+                cy - 7,
+                190,
+                24
+        );
+
+        tSexo.setBounds(
+                cx - 30,
+                cy + 23,
+                190,
+                24
+        );
+
+        jLabel1.setBounds(
+                cx - 160,
+                cy - 97,
+                130,
+                20
+        );
+
+        jLabel2.setBounds(
+                cx - 160,
+                cy - 67,
+                130,
+                20
+        );
+
+        jLabel3.setBounds(
+                cx - 160,
+                cy - 37,
+                130,
+                20
+        );
+
+        jLabel4.setBounds(
+                cx - 160,
+                cy - 7,
+                130,
+                20
+        );
+
+        jLabel5.setBounds(
+                cx - 160,
+                cy + 23,
+                130,
+                20
+        );
+
+        ConcluirCadastro.setBounds(
+                cx - 30,
+                cy + 73,
+                190,
+                24
+        );
+
+        // =====================================
+        // VOLTAR
+        // =====================================
+
+        Voltar.setBounds(
+                15,
+                altura - 60,
+                70,
+                30
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
