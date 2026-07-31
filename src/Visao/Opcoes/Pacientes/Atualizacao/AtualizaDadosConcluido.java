@@ -14,6 +14,7 @@ import Visao.Opcoes.Pacientes.Cadastros.CadastroPaciente;
  * @author guto4
  */
 public class AtualizaDadosConcluido extends javax.swing.JFrame {
+    private Image imagemOriginalCache = null;
 
     /**
      * Creates new form AtualizaDadosConcluido
@@ -26,7 +27,20 @@ public class AtualizaDadosConcluido extends javax.swing.JFrame {
                 getContentPane().getComponentCount() - 1
         );
 
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Reaplica o estado (maximizada ou nao) que o usuario estava usando
+        if (Utilitarios.EstadoJanela.maximizada) {
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+        }
+
+        // Guarda o estado atual sempre que o usuario maximizar/restaurar a janela
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            @Override
+            public void windowStateChanged(java.awt.event.WindowEvent e) {
+                Utilitarios.EstadoJanela.maximizada =
+                        (getExtendedState() & JFrame.MAXIMIZED_BOTH) == JFrame.MAXIMIZED_BOTH;
+            }
+        });
+
         // Ajusta a tela ao tamanho da janela
         addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
@@ -166,15 +180,13 @@ public class AtualizaDadosConcluido extends javax.swing.JFrame {
 
         private void atualizarImagem() {
 
-        ImageIcon iconeOriginal = new ImageIcon(
-                getClass().getResource(
-                        "/Imagem/Odontoloigia Temporaria2.png"
-                )
-        );
+        if (imagemOriginalCache == null) {
+            imagemOriginalCache = new ImageIcon(
+                    getClass().getResource("/Imagem/Odontoloigia Temporaria2.png")
+            ).getImage();
+        }
 
-        Image imagem = iconeOriginal.getImage();
-
-        Image imagemRedimensionada = imagem.getScaledInstance(
+        Image imagemRedimensionada = imagemOriginalCache.getScaledInstance(
                 jLabel1.getWidth(),
                 jLabel1.getHeight(),
                 Image.SCALE_SMOOTH

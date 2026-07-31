@@ -9,12 +9,12 @@ import Modelo.DadosPessoaisM;
 import Controle.DadosPessoaisC;
 import Visao.Opcoes.Pacientes.OpcoesPacientes;
 import java.awt.event.KeyEvent;
-import java.awt.image.ImageObserver;
 /**
  *
  * @author guto4
  */
 public class CadastroPaciente extends javax.swing.JFrame {
+    private Image imagemOriginalCache = null;
     int countCPF = 0;
     int countContato = 0;
     int countData = 0;
@@ -29,7 +29,20 @@ public class CadastroPaciente extends javax.swing.JFrame {
                 getContentPane().getComponentCount() - 1
         );
 
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Reaplica o estado (maximizada ou nao) que o usuario estava usando
+        if (Utilitarios.EstadoJanela.maximizada) {
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+        }
+
+        // Guarda o estado atual sempre que o usuario maximizar/restaurar a janela
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            @Override
+            public void windowStateChanged(java.awt.event.WindowEvent e) {
+                Utilitarios.EstadoJanela.maximizada =
+                        (getExtendedState() & JFrame.MAXIMIZED_BOTH) == JFrame.MAXIMIZED_BOTH;
+            }
+        });
+
         // Ajusta a tela ao tamanho da janela
         addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
@@ -328,15 +341,13 @@ public class CadastroPaciente extends javax.swing.JFrame {
 
         private void atualizarImagem() {
 
-        ImageIcon iconeOriginal = new ImageIcon(
-                getClass().getResource(
-                        "/Imagem/Odontologia Temporaria.png"
-                )
-        );
+        if (imagemOriginalCache == null) {
+            imagemOriginalCache = new ImageIcon(
+                    getClass().getResource("/Imagem/Odontologia Temporaria.png")
+            ).getImage();
+        }
 
-        Image imagemBase = iconeOriginal.getImage();
-
-        Image imagemRedimensionada = imagemBase.getScaledInstance(
+        Image imagemRedimensionada = imagemOriginalCache.getScaledInstance(
                 imagem.getWidth(),
                 imagem.getHeight(),
                 Image.SCALE_SMOOTH
